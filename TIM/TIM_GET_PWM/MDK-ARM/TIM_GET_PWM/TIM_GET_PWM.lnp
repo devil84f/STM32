@@ -1,0 +1,26 @@
+--cpu Cortex-M3
+"tim_get_pwm\startup_stm32f103xb.o"
+"tim_get_pwm\main.o"
+"tim_get_pwm\gpio.o"
+"tim_get_pwm\tim.o"
+"tim_get_pwm\stm32f1xx_it.o"
+"tim_get_pwm\stm32f1xx_hal_msp.o"
+"tim_get_pwm\oled.o"
+"tim_get_pwm\stm32f1xx_hal_gpio_ex.o"
+"tim_get_pwm\stm32f1xx_hal_tim.o"
+"tim_get_pwm\stm32f1xx_hal_tim_ex.o"
+"tim_get_pwm\stm32f1xx_hal.o"
+"tim_get_pwm\stm32f1xx_hal_rcc.o"
+"tim_get_pwm\stm32f1xx_hal_rcc_ex.o"
+"tim_get_pwm\stm32f1xx_hal_gpio.o"
+"tim_get_pwm\stm32f1xx_hal_dma.o"
+"tim_get_pwm\stm32f1xx_hal_cortex.o"
+"tim_get_pwm\stm32f1xx_hal_pwr.o"
+"tim_get_pwm\stm32f1xx_hal_flash.o"
+"tim_get_pwm\stm32f1xx_hal_flash_ex.o"
+"tim_get_pwm\stm32f1xx_hal_exti.o"
+"tim_get_pwm\system_stm32f1xx.o"
+--strict --scatter "TIM_GET_PWM\TIM_GET_PWM.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "TIM_GET_PWM.map" -o TIM_GET_PWM\TIM_GET_PWM.axf

@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"exit_oled\startup_stm32f103xb.o"
+"exit_oled\main.o"
+"exit_oled\gpio.o"
+"exit_oled\stm32f1xx_it.o"
+"exit_oled\stm32f1xx_hal_msp.o"
+"exit_oled\stm32f1xx_hal_gpio_ex.o"
+"exit_oled\stm32f1xx_hal_tim.o"
+"exit_oled\stm32f1xx_hal_tim_ex.o"
+"exit_oled\stm32f1xx_hal.o"
+"exit_oled\stm32f1xx_hal_rcc.o"
+"exit_oled\stm32f1xx_hal_rcc_ex.o"
+"exit_oled\stm32f1xx_hal_gpio.o"
+"exit_oled\stm32f1xx_hal_dma.o"
+"exit_oled\stm32f1xx_hal_cortex.o"
+"exit_oled\stm32f1xx_hal_pwr.o"
+"exit_oled\stm32f1xx_hal_flash.o"
+"exit_oled\stm32f1xx_hal_flash_ex.o"
+"exit_oled\stm32f1xx_hal_exti.o"
+"exit_oled\system_stm32f1xx.o"
+"exit_oled\oled.o"
+--strict --scatter "EXIT_OLED\EXIT_OLED.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "EXIT_OLED.map" -o EXIT_OLED\EXIT_OLED.axf

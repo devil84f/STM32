@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"led_button\startup_stm32f103xb.o"
+"led_button\main.o"
+"led_button\gpio.o"
+"led_button\stm32f1xx_it.o"
+"led_button\stm32f1xx_hal_msp.o"
+"led_button\stm32f1xx_hal_gpio_ex.o"
+"led_button\stm32f1xx_hal_tim.o"
+"led_button\stm32f1xx_hal_tim_ex.o"
+"led_button\stm32f1xx_hal.o"
+"led_button\stm32f1xx_hal_rcc.o"
+"led_button\stm32f1xx_hal_rcc_ex.o"
+"led_button\stm32f1xx_hal_gpio.o"
+"led_button\stm32f1xx_hal_dma.o"
+"led_button\stm32f1xx_hal_cortex.o"
+"led_button\stm32f1xx_hal_pwr.o"
+"led_button\stm32f1xx_hal_flash.o"
+"led_button\stm32f1xx_hal_flash_ex.o"
+"led_button\stm32f1xx_hal_exti.o"
+"led_button\system_stm32f1xx.o"
+"led_button\oled.o"
+--strict --scatter "LED_BUTTON\LED_BUTTON.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "LED_BUTTON.map" -o LED_BUTTON\LED_BUTTON.axf

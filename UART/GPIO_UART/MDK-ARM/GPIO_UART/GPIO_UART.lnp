@@ -1,0 +1,26 @@
+--cpu Cortex-M3
+"gpio_uart\startup_stm32f103xb.o"
+"gpio_uart\main.o"
+"gpio_uart\gpio.o"
+"gpio_uart\usart.o"
+"gpio_uart\stm32f1xx_it.o"
+"gpio_uart\stm32f1xx_hal_msp.o"
+"gpio_uart\stm32f1xx_hal_gpio_ex.o"
+"gpio_uart\stm32f1xx_hal_tim.o"
+"gpio_uart\stm32f1xx_hal_tim_ex.o"
+"gpio_uart\stm32f1xx_hal_uart.o"
+"gpio_uart\stm32f1xx_hal.o"
+"gpio_uart\stm32f1xx_hal_rcc.o"
+"gpio_uart\stm32f1xx_hal_rcc_ex.o"
+"gpio_uart\stm32f1xx_hal_gpio.o"
+"gpio_uart\stm32f1xx_hal_dma.o"
+"gpio_uart\stm32f1xx_hal_cortex.o"
+"gpio_uart\stm32f1xx_hal_pwr.o"
+"gpio_uart\stm32f1xx_hal_flash.o"
+"gpio_uart\stm32f1xx_hal_flash_ex.o"
+"gpio_uart\stm32f1xx_hal_exti.o"
+"gpio_uart\system_stm32f1xx.o"
+--strict --scatter "GPIO_UART\GPIO_UART.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "GPIO_UART.map" -o GPIO_UART\GPIO_UART.axf

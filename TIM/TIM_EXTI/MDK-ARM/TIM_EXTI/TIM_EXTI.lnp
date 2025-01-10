@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"tim_exti\startup_stm32f103xb.o"
+"tim_exti\main.o"
+"tim_exti\gpio.o"
+"tim_exti\tim.o"
+"tim_exti\stm32f1xx_it.o"
+"tim_exti\stm32f1xx_hal_msp.o"
+"tim_exti\stm32f1xx_hal_gpio_ex.o"
+"tim_exti\stm32f1xx_hal_tim.o"
+"tim_exti\stm32f1xx_hal_tim_ex.o"
+"tim_exti\stm32f1xx_hal.o"
+"tim_exti\stm32f1xx_hal_rcc.o"
+"tim_exti\stm32f1xx_hal_rcc_ex.o"
+"tim_exti\stm32f1xx_hal_gpio.o"
+"tim_exti\stm32f1xx_hal_dma.o"
+"tim_exti\stm32f1xx_hal_cortex.o"
+"tim_exti\stm32f1xx_hal_pwr.o"
+"tim_exti\stm32f1xx_hal_flash.o"
+"tim_exti\stm32f1xx_hal_flash_ex.o"
+"tim_exti\stm32f1xx_hal_exti.o"
+"tim_exti\system_stm32f1xx.o"
+--strict --scatter "TIM_EXTI\TIM_EXTI.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "TIM_EXTI.map" -o TIM_EXTI\TIM_EXTI.axf
