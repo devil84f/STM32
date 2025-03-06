@@ -1,0 +1,26 @@
+--cpu Cortex-M3
+"dwa_1\startup_stm32f103xb.o"
+"dwa_1\main.o"
+"dwa_1\gpio.o"
+"dwa_1\dma.o"
+"dwa_1\stm32f1xx_it.o"
+"dwa_1\stm32f1xx_hal_msp.o"
+"dwa_1\oled.o"
+"dwa_1\stm32f1xx_hal_gpio_ex.o"
+"dwa_1\stm32f1xx_hal_tim.o"
+"dwa_1\stm32f1xx_hal_tim_ex.o"
+"dwa_1\stm32f1xx_hal.o"
+"dwa_1\stm32f1xx_hal_rcc.o"
+"dwa_1\stm32f1xx_hal_rcc_ex.o"
+"dwa_1\stm32f1xx_hal_gpio.o"
+"dwa_1\stm32f1xx_hal_dma.o"
+"dwa_1\stm32f1xx_hal_cortex.o"
+"dwa_1\stm32f1xx_hal_pwr.o"
+"dwa_1\stm32f1xx_hal_flash.o"
+"dwa_1\stm32f1xx_hal_flash_ex.o"
+"dwa_1\stm32f1xx_hal_exti.o"
+"dwa_1\system_stm32f1xx.o"
+--strict --scatter "DWA_1\DWA_1.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "DWA_1.map" -o DWA_1\DWA_1.axf
