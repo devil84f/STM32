@@ -109,6 +109,7 @@ int main(void)
     
     MPU6050_Data mpu_data;
     float accel[3], gyro[3];
+	float res[3];
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -1,6 +1,6 @@
 Dependencies for Project 'I2C_MPU6050', Target 'I2C_MPU6050': (DO NOT MODIFY !)
 F (startup_stm32f103xb.s)(0x67FC7FC6)(--cpu Cortex-M3 -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_I2C_MPU6050-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1"--list startup_stm32f103xb.lst --xref -o i2c_mpu6050\startup_stm32f103xb.o --depend i2c_mpu6050\startup_stm32f103xb.d)
-F (../Core/Src/main.c)(0x67FCDF01)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_I2C_MPU6050-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o i2c_mpu6050\main.o --omf_browse i2c_mpu6050\main.crf --depend i2c_mpu6050\main.d)
+F (../Core/Src/main.c)(0x67FDBB0A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_I2C_MPU6050-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o i2c_mpu6050\main.o --omf_browse i2c_mpu6050\main.crf --depend i2c_mpu6050\main.d)
 I (../Core/Inc/main.h)(0x67FC7FC4)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x67E3CAB6)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x67FC7FC4)
@@ -34,7 +34,7 @@ I (../Core/Inc/i2c.h)(0x67FC7FC3)
 I (../Core/Inc/tim.h)(0x67FC7FC3)
 I (../Core/Inc/usart.h)(0x67FC7FC4)
 I (../Core/Inc/gpio.h)(0x67FC7FC3)
-I (../Core/Inc/MPU6050_driver.h)(0x67F88ED7)
+I (../Core/Inc/MPU6050_driver.h)(0x67FDBB0A)
 I (../Core/Inc/oled.h)(0x67CE6FDA)
 I (D:\Keil5\Keil5\APP\ARM\ARMCC\include\stdio.h)(0x588B8344)
 F (../Core/Src/gpio.c)(0x67FC7FC3)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_I2C_MPU6050-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o i2c_mpu6050\gpio.o --omf_browse i2c_mpu6050\gpio.crf --depend i2c_mpu6050\gpio.d)
@@ -252,7 +252,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x67E3CAB6)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x67E3CAB6)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x67E3CAB6)
 I (../Core/Inc/OLED_Font.h)(0x67CE6FDA)
-F (..\Core\Inc\MPU6050_driver.c)(0x67F89258)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_I2C_MPU6050-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o i2c_mpu6050\mpu6050_driver.o --omf_browse i2c_mpu6050\mpu6050_driver.crf --depend i2c_mpu6050\mpu6050_driver.d)
+F (..\Core\Inc\MPU6050_driver.c)(0x67FDBB0A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_I2C_MPU6050-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o i2c_mpu6050\mpu6050_driver.o --omf_browse i2c_mpu6050\mpu6050_driver.crf --depend i2c_mpu6050\mpu6050_driver.d)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x67E3CAB6)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x67FC7FC4)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x67E3CAB6)
@@ -281,7 +281,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x67E3CAB6)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x67E3CAB6)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x67E3CAB6)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x67E3CAB6)
-I (..\Core\Inc\MPU6050_driver.h)(0x67F88ED7)
+I (..\Core\Inc\MPU6050_driver.h)(0x67FDBB0A)
 I (D:\Keil5\Keil5\APP\ARM\ARMCC\include\math.h)(0x588B8344)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c)(0x67E3CAB6)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_I2C_MPU6050-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o i2c_mpu6050\stm32f1xx_hal_gpio_ex.o --omf_browse i2c_mpu6050\stm32f1xx_hal_gpio_ex.crf --depend i2c_mpu6050\stm32f1xx_hal_gpio_ex.d)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x67E3CAB6)

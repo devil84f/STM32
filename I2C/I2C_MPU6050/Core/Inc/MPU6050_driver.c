@@ -2,6 +2,26 @@
 #include "MPU6050_driver.h"
 #include <math.h>
 
+#define RtA (57.2957795f)  // 弧度转角度，180/π ≈ 57.2957795
+#define Ki  0.005f         // 积分系数
+#define DT  0.005f          // 计算周期的一半，单位s
+ 
+// 加速度和角速度
+int16_t AX, AY, AZ, GX, GY, GZ;
+ 
+typedef struct {
+    float c1, c2, c3, a1, a2, a3, a;
+} Degree;
+ 
+Degree d;
+ 
+typedef struct {
+    float q0, q1, q2, q3;
+    float exInt, eyInt, ezInt;
+} Quater;
+ 
+Quater q = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+
 /**
   * @brief  MPU6050初始化
   * @param  hi2c: I2C句柄指针
@@ -61,13 +81,27 @@ void MPU6050_Read_All(I2C_HandleTypeDef *hi2c, MPU6050_Data *data)
   */
 void MPU6050_Convert_To_Real(MPU6050_Data *raw, float *accel, float *gyro)
 {
-    // 加速度计转换 (±8g范围)
+    // 加速度计转换 (±2g范围)
     accel[0] = raw->Accel_X_RAW / 16384.0f;
     accel[1] = raw->Accel_Y_RAW / 16384.0f;
     accel[2] = raw->Accel_Z_RAW / 16384.0f;
     
-    // 陀螺仪转换 (±2000°/s范围)
+    // 陀螺仪转换 (±250°/s范围)
     gyro[0] = raw->Gyro_X_RAW / 131.0f;
     gyro[1] = raw->Gyro_Y_RAW / 131.0f;
     gyro[2] = raw->Gyro_Z_RAW / 131.0f;
+	
+	// 转换为rad/s
+	gyro[0] /= RtA;
+	gyro[1] /= RtA;
+	gyro[2] /= RtA;
+	
+	// 加速度归一化
+    float norm = sqrtf(accel[0] * accel[0] + accel[1] * accel[1] + accel[2] * accel[2]);
+    if (norm > 1e-6f) {  // 防止除零
+        float inv_norm = 1.0f / norm;
+        accel[0] *= inv_norm;
+        accel[1] *= inv_norm;
+        accel[2] *= inv_norm;
+    }
 }
