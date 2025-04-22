@@ -36,3 +36,5 @@ i2c_mpu6050\main.o: ../Core/Inc/gpio.h
 i2c_mpu6050\main.o: ../Core/Inc/MPU6050_driver.h
 i2c_mpu6050\main.o: ../Core/Inc/oled.h
 i2c_mpu6050\main.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdio.h
+i2c_mpu6050\main.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\math.h
+i2c_mpu6050\main.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdlib.h

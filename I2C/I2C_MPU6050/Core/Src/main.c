@@ -27,6 +27,8 @@
 #include "MPU6050_driver.h"
 #include "oled.h"
 #include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,6 +61,111 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 #define RXBUFFERSIZE  256
 char RxBuffer[RXBUFFERSIZE]; 
+
+#define SENDER_ADDR   0x05
+#define TARGET_ADDR   0xAF
+#define SCALE_FACTOR  1000  // 缩放因子（保留3位小数）
+
+// 待发送的float数据
+float accel[3] = {1.23f, -0.45f, 9.81f};  // 示例加速度计数据 (m/s2)
+float gyro[3] = {0.78f, -1.56f, 3.14f};   // 示例陀螺仪数据 (rad/s)
+
+// 将float转为int32_t（缩放后）
+int32_t float_to_scaled_int(float value) {
+    return (int32_t)(value * SCALE_FACTOR);
+}
+
+// 发送传感器数据帧（功能字0xF1）
+HAL_StatusTypeDef SendSensorData(float *accel, float *gyro) {
+    uint8_t frame[256];
+    uint8_t frame_len = 0;
+    uint8_t sum = 0;
+
+    // 帧头
+    frame[frame_len++] = 0xAA;
+    sum += 0xAA;
+
+    // 设备地址
+    frame[frame_len++] = SENDER_ADDR;
+    sum += SENDER_ADDR;
+    frame[frame_len++] = TARGET_ADDR;
+    sum += TARGET_ADDR;
+
+    // 功能字（自定义为0xF2，区别于其他帧）
+    frame[frame_len++] = 0xF2;
+    sum += 0xF2;
+
+    // 数据部分：accel[3] + gyro[3]（每个float转为int32_t，占4字节）
+    uint8_t data_bytes = 6 * sizeof(int32_t);  // 6个int32_t
+    frame[frame_len++] = data_bytes;
+    sum += data_bytes;
+
+    // 填充加速度计数据（大端序）
+    for (int i = 0; i < 3; i++) {
+        int32_t scaled_accel = float_to_scaled_int(accel[i]);
+        frame[frame_len++] = (scaled_accel >> 24) & 0xFF;
+        frame[frame_len++] = (scaled_accel >> 16) & 0xFF;
+        frame[frame_len++] = (scaled_accel >> 8) & 0xFF;
+        frame[frame_len++] = scaled_accel & 0xFF;
+        sum += frame[frame_len - 4] + frame[frame_len - 3] + frame[frame_len - 2] + frame[frame_len - 1];
+    }
+
+    // 填充陀螺仪数据（大端序）
+    for (int i = 0; i < 3; i++) {
+        int32_t scaled_gyro = float_to_scaled_int(gyro[i]);
+        frame[frame_len++] = (scaled_gyro >> 24) & 0xFF;
+        frame[frame_len++] = (scaled_gyro >> 16) & 0xFF;
+        frame[frame_len++] = (scaled_gyro >> 8) & 0xFF;
+        frame[frame_len++] = scaled_gyro & 0xFF;
+        sum += frame[frame_len - 4] + frame[frame_len - 3] + frame[frame_len - 2] + frame[frame_len - 1];
+    }
+
+    // 校验和
+    frame[frame_len++] = sum & 0xFF;
+
+    // 发送数据
+    return HAL_UART_Transmit(&huart1, frame, frame_len, HAL_MAX_DELAY);
+}
+
+// 发送波形数据帧（功能字0xF1）
+HAL_StatusTypeDef SendWaveformData(uint16_t *data, uint16_t num) {
+    uint8_t frame[256];
+    uint8_t frame_len = 0;
+    uint8_t sum = 0;
+
+    // 帧头
+    frame[frame_len++] = 0xAA;
+    sum += 0xAA;
+
+    // 设备地址
+    frame[frame_len++] = SENDER_ADDR;
+    sum += SENDER_ADDR;
+    frame[frame_len++] = TARGET_ADDR;
+    sum += TARGET_ADDR;
+
+    // 功能字
+    frame[frame_len++] = 0xF1;
+    sum += 0xF1;
+
+    // 数据长度（每个uint16_t拆分为2字节）
+    uint16_t data_bytes = num * 2;
+    frame[frame_len++] = (uint8_t)data_bytes;
+    sum += (uint8_t)data_bytes;
+
+    // 填充数据（大端序）
+    for (uint16_t i = 0; i < num; i++) {
+        frame[frame_len++] = (data[i] >> 8) & 0xFF;  // 高字节
+        sum += frame[frame_len - 1];
+        frame[frame_len++] = data[i] & 0xFF;         // 低字节
+        sum += frame[frame_len - 1];
+    }
+
+    // 校验和
+    frame[frame_len++] = sum & 0xFF;
+
+    // 发送数据
+    return HAL_UART_Transmit(&huart1, frame, frame_len, HAL_MAX_DELAY);
+}
 /* USER CODE END 0 */
 
 /**
@@ -94,22 +201,22 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 	// 初始化OLED
-    OLED_Init();
+	OLED_Init();
 
-    OLED_Clear();
-    OLED_ShowString(1, 1, "g");    // 左栏标题
-    OLED_ShowString(1, 9, "dps");   // 右栏标题
-    
-    // 初始化MPU6050（可选）
-    if(MPU6050_Init(&hi2c2) != 0)
-    {
-        OLED_ShowString(3, 1, "MPU6050 Error!");
-        while(1);
-    }
-    
-    MPU6050_Data mpu_data;
-    float accel[3], gyro[3];
-	float res[3];
+	OLED_Clear();
+	OLED_ShowString(1, 1, "g");    // 左栏标题
+	OLED_ShowString(1, 9, "dps");   // 右栏标题
+
+	// 初始化MPU6050（可选）
+	if(MPU6050_Init(&hi2c2) != 0)
+	{
+		OLED_ShowString(3, 1, "MPU6050 Error!");
+		while(1);
+	}
+
+	MPU6050_Data mpu_data;
+	float accel[3], gyro[3];
+	uint16_t A[2] = {0};
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -140,7 +247,11 @@ int main(void)
         OLED_ShowString(3, 9, buf);
 		sprintf(buf, "d:%.2f", gyro[2]);
         OLED_ShowString(4, 9, buf);
-        
+		
+		SendSensorData(accel, gyro);
+        // SendWaveformData(A, 2);
+		A[0]++;
+		A[1] += 2;
         HAL_Delay(100);  // 100ms刷新
   }
   /* USER CODE END 3 */
