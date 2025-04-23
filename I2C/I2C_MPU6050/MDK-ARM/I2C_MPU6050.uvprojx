@@ -435,6 +435,11 @@
               <FileType>1</FileType>
               <FilePath>..\Core\Inc\MPU6050_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>ANO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ANO.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

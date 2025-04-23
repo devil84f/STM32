@@ -9,6 +9,7 @@
 "i2c_mpu6050\stm32f1xx_hal_msp.o"
 "i2c_mpu6050\oled.o"
 "i2c_mpu6050\mpu6050_driver.o"
+"i2c_mpu6050\ano.o"
 "i2c_mpu6050\stm32f1xx_hal_gpio_ex.o"
 "i2c_mpu6050\stm32f1xx_hal_i2c.o"
 "i2c_mpu6050\stm32f1xx_hal.o"
