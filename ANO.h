@@ -13,7 +13,7 @@
 // 地址定义
 #define SENDER_ADDR   0x05 // 发送设备
 #define TARGET_ADDR   0xAF // 发送至上位机
-#define HEAD_ADDR     0xAF // 帧头
+#define HEAD_ADDR     0xAA // 帧头
 
 // 功能字定义
 #define VER     0x00 // 版本信息

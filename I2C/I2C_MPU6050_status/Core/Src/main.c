@@ -114,7 +114,7 @@ int main(void)
 
 	MPU6050_Data mpu_data;
 	float accel[3], gyro[3];
-	// uint16_t A[2] = {0};
+	uint16_t A[2] = {0};
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -156,9 +156,9 @@ int main(void)
          angles.pitch * 180.0f / M_PI,
          angles.yaw * 180.0f / M_PI);
 		// SendSensorData(accel, gyro);
-        // SendWaveformData(A, 2);
-		// A[0]++;
-		// A[1] += 2;
+        SendWaveformData(A, 2);
+		A[0]++;
+		A[1] += 2;
         HAL_Delay(100);  // 100msË¢ÐÂ
   }
   /* USER CODE END 3 */
