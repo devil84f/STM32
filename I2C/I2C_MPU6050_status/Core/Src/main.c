@@ -157,6 +157,7 @@ int main(void)
          angles.yaw * 180.0f / M_PI);
 		// SendSensorData(accel, gyro);
         SendWaveformData(A, 2);
+		
 		A[0]++;
 		A[1] += 2;
         HAL_Delay(100);  // 100msË¢ÐÂ

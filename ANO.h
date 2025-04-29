@@ -32,9 +32,11 @@
 int32_t float_to_scaled_int(float value);
 HAL_StatusTypeDef SendSensorData(float *accel, float *gyro);
 HAL_StatusTypeDef SendWaveformData(uint16_t *data, uint16_t num);
-	 
+HAL_StatusTypeDef Send_ANOTC(float pitch, float roll, float yaw);
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* __ANO_H */
+
