@@ -20,6 +20,6 @@
 "led_button\system_stm32f1xx.o"
 "led_button\oled.o"
 --strict --scatter "LED_BUTTON\LED_BUTTON.sct"
---summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "LED_BUTTON.map" -o LED_BUTTON\LED_BUTTON.axf

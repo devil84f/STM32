@@ -1,0 +1,15 @@
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
+freertos_01\event_groups.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdlib.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+freertos_01\event_groups.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stddef.h
+freertos_01\event_groups.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdint.h
+freertos_01\event_groups.o: ../Core/Inc/FreeRTOSConfig.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+freertos_01\event_groups.o: C:/Users/LiNing/STM32Cube/Repository/STM32Cube_FW_F4_V1.26.2/Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h

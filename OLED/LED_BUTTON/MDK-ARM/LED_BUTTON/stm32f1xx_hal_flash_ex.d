@@ -6,14 +6,14 @@ led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/CMSIS/Include/core_cm3.h
-led_button\stm32f1xx_hal_flash_ex.o: D:\STM32\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+led_button\stm32f1xx_hal_flash_ex.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdint.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/CMSIS/Include/cmsis_version.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-led_button\stm32f1xx_hal_flash_ex.o: D:\STM32\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+led_button\stm32f1xx_hal_flash_ex.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stddef.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h
 led_button\stm32f1xx_hal_flash_ex.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio_ex.h

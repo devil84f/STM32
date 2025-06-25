@@ -3,49 +3,49 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: ¶ÃVision V5.20.0.0
-Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 666 Lenovo, 666, LIC=S962Z-JX0NE-K62QE-59LLI-EUBXZ-X54W6
+IDE-Version: ¶ÃVision V5.24.2.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: LiNing LiNing, LiNing, LIC=MPPLD-8F85L-30KNC-7SMH0-ZFP8T-5MI3B
  
 Tool Versions:
-Toolchain:       *** Unknown Product ***  Version: 5.20
-Toolchain Path:  D:\STM32\keil5\ARM\ARMCC\Bin
-C Compiler:      Armcc.exe V5.06 update 2 (build 183)
-Assembler:       Armasm.exe V5.06 update 2 (build 183)
-Linker/Locator:  ArmLink.exe V5.06 update 2 (build 183)
-Library Manager: ArmAr.exe V5.06 update 2 (build 183)
-Hex Converter:   FromElf.exe V5.06 update 2 (build 183)
-CPU DLL:         SARMCM3.DLL V5.20
-Dialog DLL:      DCM.DLL V1.13.7.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
-Dialog DLL:      TCM.DLL V1.14.9.0
+Toolchain:       MDK-ARM Plus  Version: 5.24.1
+Toolchain Path:  D:\Keil5\Keil5\APP\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 5 (build 528)
+Assembler:       Armasm.exe V5.06 update 5 (build 528)
+Linker/Locator:  ArmLink.exe V5.06 update 5 (build 528)
+Library Manager: ArmAr.exe V5.06 update 5 (build 528)
+Hex Converter:   FromElf.exe V5.06 update 5 (build 528)
+CPU DLL:         SARMCM3.DLL V5.24.1
+Dialog DLL:      DCM.DLL V1.16.0.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.1.0
+Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
-D:\STM32\Master\OLED\LED_BUTTON\MDK-ARM\LED_BUTTON.uvprojx
-Project File Date:  12/06/2024
+D:\Keil5\Github\STM32\OLED\LED_BUTTON\MDK-ARM\LED_BUTTON.uvprojx
+Project File Date:  06/25/2025
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 2 (build 183)', folder: 'D:\STM32\keil5\ARM\ARMCC\Bin'
+*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\Keil5\Keil5\APP\ARM\ARMCC\Bin'
 Build target 'LED_BUTTON'
 assembling startup_stm32f103xb.s...
-compiling stm32f1xx_hal_gpio_ex.c...
-compiling stm32f1xx_it.c...
-compiling stm32f1xx_hal_tim.c...
-compiling main.c...
-compiling gpio.c...
-compiling stm32f1xx_hal_msp.c...
 compiling stm32f1xx_hal_tim_ex.c...
+compiling stm32f1xx_hal_gpio_ex.c...
+compiling stm32f1xx_hal_tim.c...
+compiling stm32f1xx_hal_msp.c...
 compiling stm32f1xx_hal.c...
 compiling stm32f1xx_hal_gpio.c...
-compiling stm32f1xx_hal_dma.c...
-compiling stm32f1xx_hal_rcc_ex.c...
-compiling stm32f1xx_hal_rcc.c...
-compiling stm32f1xx_hal_cortex.c...
 compiling stm32f1xx_hal_pwr.c...
+compiling main.c...
+compiling gpio.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_hal_cortex.c...
+compiling stm32f1xx_it.c...
+compiling stm32f1xx_hal_dma.c...
 compiling stm32f1xx_hal_flash.c...
-compiling stm32f1xx_hal_exti.c...
+compiling stm32f1xx_hal_rcc.c...
 compiling stm32f1xx_hal_flash_ex.c...
 compiling system_stm32f1xx.c...
+compiling stm32f1xx_hal_exti.c...
 compiling OLED.c...
 ..\Core\Src\OLED.c(21): warning:  #188-D: enumerated type mixed with another type
   	
@@ -85,7 +85,7 @@ LED_W_SCL(1);
 LED_W_SCL(0);
 ..\Core\Src\OLED.c(64): warning:  #188-D: enumerated type mixed with another type
   	
-LED_W_SCL(1);	//È¢?Â§?Áö?‰∏Ä‰∏?Êó?Èí?Ôº?‰∏?Â§?Áê?Â∫?Á≠?‰ø?Âè?
+LED_W_SCL(1);	//È¢ùÂ§ñÁöÑ‰∏Ä‰∏™Êó∂ÈíüÔºå‰∏çÂ§ÑÁêÜÂ∫îÁ≠î‰ø°Âè?
 ..\Core\Src\OLED.c(65): warning:  #188-D: enumerated type mixed with another type
   	
 LED_W_SCL(0);
@@ -98,20 +98,25 @@ FromELF: creating hex file...
 <h2>Software Packages used:</h2>
 
 Package Vendor: ARM
-                http://www.keil.com/pack/ARM.CMSIS.4.5.0.pack
-                ARM::CMSIS:CORE:4.3.0
+                http://www.keil.com/pack/ARM.CMSIS.5.0.1.pack
+                ARM.CMSIS.5.0.1
                 CMSIS (Cortex Microcontroller Software Interface Standard)
-   * Component: CORE Version: 4.3.0
+   * Component: CORE Version: 5.0.1
+
+Package Vendor: Keil
+                https://www.keil.com/pack/Keil.STM32F1xx_DFP.2.4.1.pack
+                Keil.STM32F1xx_DFP.2.4.1
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
 
 <h2>Collection of Component include folders:</h2>
-  D:\STM32\Master\OLED\LED_BUTTON\MDK-ARM\RTE
-  D:\STM32\keil5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include
-  D:\STM32\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include
+  .\RTE\_LED_BUTTON
+  D:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include
+  D:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include
 
 <h2>Collection of Component Files used:</h2>
 
-   * Component: ARM::CMSIS:CORE:4.3.0
-Build Time Elapsed:  00:00:18
+   * Component: ARM::CMSIS:CORE:5.0.1
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>
