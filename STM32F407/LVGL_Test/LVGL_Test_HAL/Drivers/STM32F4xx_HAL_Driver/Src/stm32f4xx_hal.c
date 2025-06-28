@@ -137,6 +137,7 @@ HAL_TickFreqTypeDef uwTickFreq = HAL_TICK_FREQ_DEFAULT;  /* 1KHz */
   * @{
   */
 
+
 /**
   * @brief  This function is used to initialize the HAL Library; it must be the first 
   *         instruction to be executed in the main program (before to call any other
