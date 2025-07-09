@@ -31,7 +31,6 @@
 
 #include "stdlib.h"
 #include "stm32f4xx_hal.h"
-#include "delay.h"
 
 /******************************************************************************************/
 /* LCD RST/WR/RD/BL/CS/RS Òý½Å ¶¨Òå 

@@ -30,6 +30,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x684C1A23
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x684C1A23)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x684C1A23)
 I (../Core/Inc/gpio.h)(0x685E1062)
+I (../Core/Inc/lcd.h)(0x00000000)
+I (D:\Keil5\Keil5\APP\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 F (../Core/Src/gpio.c)(0x685E1062)()
 F (../Core/Src/stm32f4xx_it.c)(0x685E1062)()
 F (../Core/Src/stm32f4xx_hal_msp.c)(0x685E1062)()

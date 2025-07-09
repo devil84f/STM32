@@ -31,5 +31,4 @@ lvgl_test\lcd.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h
 lvgl_test\lcd.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h
 lvgl_test\lcd.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 lvgl_test\lcd.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
-lvgl_test\lcd.o: ..\Core\BSP\delay.h
 lvgl_test\lcd.o: ..\Core\BSP\lcdfont.h
