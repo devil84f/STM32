@@ -1,0 +1,16 @@
+fsmc\lv_font.o: ..\LVGL\src\font\lv_font.c
+fsmc\lv_font.o: ..\LVGL\src\font\lv_font.h
+fsmc\lv_font.o: ..\LVGL\src\font\../lv_conf_internal.h
+fsmc\lv_font.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdint.h
+fsmc\lv_font.o: ..\LVGL\src\font\../lv_conf_kconfig.h
+fsmc\lv_font.o: ..\LVGL\examples\porting\../../lv_conf.h
+fsmc\lv_font.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stddef.h
+fsmc\lv_font.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdbool.h
+fsmc\lv_font.o: ..\LVGL\src\font\lv_symbol_def.h
+fsmc\lv_font.o: ..\LVGL\src\font\../misc/lv_area.h
+fsmc\lv_font.o: ..\LVGL\src\font\../misc/lv_utils.h
+fsmc\lv_font.o: ..\LVGL\src\font\../misc/lv_log.h
+fsmc\lv_font.o: ..\LVGL\src\font\../misc/lv_types.h
+fsmc\lv_font.o: ..\LVGL\src\font\../misc/lv_assert.h
+fsmc\lv_font.o: ..\LVGL\src\font\../misc/lv_mem.h
+fsmc\lv_font.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\string.h
