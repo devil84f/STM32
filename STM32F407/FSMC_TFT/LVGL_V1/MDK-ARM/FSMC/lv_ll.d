@@ -1,0 +1,11 @@
+fsmc\lv_ll.o: ..\LVGL\src\misc\lv_ll.c
+fsmc\lv_ll.o: ..\LVGL\src\misc\lv_ll.h
+fsmc\lv_ll.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdint.h
+fsmc\lv_ll.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stddef.h
+fsmc\lv_ll.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdbool.h
+fsmc\lv_ll.o: ..\LVGL\src\misc\lv_mem.h
+fsmc\lv_ll.o: ..\LVGL\src\misc\../lv_conf_internal.h
+fsmc\lv_ll.o: ..\LVGL\src\misc\../lv_conf_kconfig.h
+fsmc\lv_ll.o: ..\LVGL\examples\porting\../../lv_conf.h
+fsmc\lv_ll.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\string.h
+fsmc\lv_ll.o: ..\LVGL\src\misc\lv_types.h

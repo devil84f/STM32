@@ -1,0 +1,15 @@
+fsmc\qrcodegen.o: ..\LVGL\src\extra\libs\qrcode\qrcodegen.c
+fsmc\qrcodegen.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\limits.h
+fsmc\qrcodegen.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdlib.h
+fsmc\qrcodegen.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\string.h
+fsmc\qrcodegen.o: ..\LVGL\src\extra\libs\qrcode\qrcodegen.h
+fsmc\qrcodegen.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdbool.h
+fsmc\qrcodegen.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stddef.h
+fsmc\qrcodegen.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdint.h
+fsmc\qrcodegen.o: ..\LVGL\src\extra\libs\qrcode\../../../misc/lv_assert.h
+fsmc\qrcodegen.o: ..\LVGL\src\extra\libs\qrcode\../../../misc/../lv_conf_internal.h
+fsmc\qrcodegen.o: ..\LVGL\src\extra\libs\qrcode\../../../misc/../lv_conf_kconfig.h
+fsmc\qrcodegen.o: ..\LVGL\examples\porting\../../lv_conf.h
+fsmc\qrcodegen.o: ..\LVGL\src\extra\libs\qrcode\../../../misc/lv_log.h
+fsmc\qrcodegen.o: ..\LVGL\src\extra\libs\qrcode\../../../misc/lv_types.h
+fsmc\qrcodegen.o: ..\LVGL\src\extra\libs\qrcode\../../../misc/lv_mem.h
