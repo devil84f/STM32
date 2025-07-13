@@ -336,7 +336,7 @@
               <MiscControls>--no-multibyte-chars</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Core\Inc\LCD;..\Core\Inc\TOUCH;..\Core\Inc\24CXX;..\Core\Inc\IIC;..\LVGL;..\LVGL\src;..\LVGL\examples\porting;..\LVGL\src\draw</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Core\Inc\LCD;..\Core\Inc\TOUCH;..\Core\Inc\24CXX;..\Core\Inc\IIC;..\LVGL;..\LVGL\src;..\LVGL\examples\porting;..\LVGL\src\draw;..\Core\Inc\ESP</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -659,6 +659,11 @@
               <FileName>myiic.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\IIC\myiic.c</FilePath>
+            </File>
+            <File>
+              <FileName>esp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\ESP\esp.c</FilePath>
             </File>
           </Files>
         </Group>

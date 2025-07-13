@@ -13,6 +13,7 @@
 "fsmc\24cxx.o"
 "fsmc\touch.o"
 "fsmc\myiic.o"
+"fsmc\esp.o"
 "fsmc\stm32f4xx_ll_fsmc.o"
 "fsmc\stm32f4xx_hal_rcc.o"
 "fsmc\stm32f4xx_hal_rcc_ex.o"

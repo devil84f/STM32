@@ -31,9 +31,7 @@
 #include "lcd.h"
 #include "touch.h"
 
-#include "lvgl.h"                // 它为整个LVGL提供了更完整的头文件引用
-#include "lv_port_disp.h"        // LVGL的显示支持
-#include "lv_port_indev.h"       // LVGL的触屏支持
+#include "esp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -119,47 +117,21 @@ int main(void)
 	// LCD 触摸屏初始化
 	lcd_init(); 
 	g_point_color = RED;
-  tp_dev.init();
+  //tp_dev.init();
 	
 	// LVGL初始化
 	lv_init();                             // LVGL 初始化
 	lv_port_disp_init();                   // 注册LVGL的显示任务
-	lv_port_indev_init();                  // 注册LVGL的触屏检测任务
+	//lv_port_indev_init();                  // 注册LVGL的触屏检测任务
 	
 	// 开启LVGL时钟
 	HAL_TIM_Base_Start_IT(&htim6);
 	
-	// 按钮
-	lv_obj_t *myBtn = lv_btn_create(lv_scr_act());                               // 创建按钮; 父对象：当前活动屏幕
-	lv_obj_set_pos(myBtn, 10, 10);                                               // 设置坐标
-	lv_obj_set_size(myBtn, 120, 50);                                             // 设置大小
+	esp_at_init();            // 初始化 ESP AT 通信
+  ui_create();              // 创建初始界面
 	
-	// 按钮样式
-	static lv_style_t style_btn;
-	lv_style_init(&style_btn);
-	lv_style_set_bg_color(&style_btn, lv_palette_main(LV_PALETTE_BLUE));  // 蓝色背景
-	lv_style_set_bg_opa(&style_btn, LV_OPA_COVER);
-	lv_obj_add_style(myBtn, &style_btn, LV_STATE_DEFAULT);
-
-	// 设置按钮样式（按下状态）
-	lv_style_set_bg_color(&style_btn, lv_palette_darken(LV_PALETTE_BLUE, 2));  // 深蓝色
-	lv_obj_add_style(myBtn, &style_btn, LV_STATE_PRESSED);
- 
-	// 按钮上的文本
-	lv_obj_t *label_btn = lv_label_create(myBtn);                                // 创建文本标签，父对象：上面的btn按钮
-	lv_obj_align(label_btn, LV_ALIGN_CENTER, 0, 0);                              // 对齐于：父对象
-	lv_label_set_text(label_btn, "Click Me!");                                        // 设置标签的文本
-
-	// 独立的标签
-	lv_obj_t *myLabel = lv_label_create(lv_scr_act());                           // 创建文本标签; 父对象：当前活动屏幕
-	lv_label_set_text(myLabel, "Hello LVGL!");                                  // 设置标签的文本
-	lv_obj_align(myLabel, LV_ALIGN_CENTER, 0, 0);                                // 对齐于：父对象
-	lv_obj_align_to(myBtn, myLabel, LV_ALIGN_OUT_TOP_MID, 0, -20);               // 对齐于：某对象
-	
-	// 设置独立标签的颜色
-	static lv_style_t style_label;
-	lv_style_set_text_color(&style_label, lv_color_hex(0x000000));  // 黑色文本
-	lv_obj_add_style(myLabel, &style_label, LV_STATE_DEFAULT);
+	// ===== 获取天气和时间信息并显示到 UI =====
+  weather_task();           // 获取数据、更新 g_weather_info、刷新 UI
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -171,15 +143,15 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		
-		// 1ms延时
-		HAL_Delay(1-1);
-		
-		// 每5ms 检测一次LVGL任务
-		static uint8_t msLVGL = 0;
-		if (msLVGL++ >= 5)
+		lv_task_handler();    // LVGL 内部任务处理
+		HAL_Delay(5);
+
+		// 你可以每隔一段时间刷新一次天气
+		static uint32_t last_tick = 0;
+		if (HAL_GetTick() - last_tick > 60000)  // 每 10 秒更新一次
 		{
-			lv_timer_handler();
-			msLVGL = 0;
+				weather_task();
+				last_tick = HAL_GetTick();
 		}
   }
   /* USER CODE END 3 */
@@ -249,6 +221,37 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			LedTimes = 0;
 		}
 	}
+}
+
+/************************************************************************************
+ * @brief       HAL_UART_RxCpltCallback
+ * @note        串口中断回调函数
+ *							接受esp的数据
+ * @param       TIM_HandleTypeDef *huart
+ * @retval      无
+*************************************************************************************/
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == USART2)
+    {
+        if (rxlen < RX_BUFFER_SIZE - 1)
+        {
+            rxlen++;
+        }
+
+        if (strstr((char *)rxdata, "OK") != NULL)
+        {
+            rxready = 1;
+            rxresult = AT_RESULT_OK;
+        }
+        else if (strstr((char *)rxdata, "ERROR") != NULL)
+        {
+            rxready = 1;
+            rxresult = AT_RESULT_ERROR;
+        }
+
+        HAL_UART_Receive_IT(&huart2, (uint8_t *)&rxdata[rxlen], 1);  // 继续接收
+    }
 }
 
 /* USER CODE END 4 */

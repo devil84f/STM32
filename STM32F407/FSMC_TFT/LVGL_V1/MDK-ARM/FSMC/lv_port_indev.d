@@ -168,3 +168,5 @@ fsmc\lv_port_indev.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 fsmc\lv_port_indev.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 fsmc\lv_port_indev.o: ..\Core\Inc\TOUCH\touch.h
 fsmc\lv_port_indev.o: ../Core/Inc/main.h
+fsmc\lv_port_indev.o: ..\LVGL\examples\porting\lv_port_disp.h
+fsmc\lv_port_indev.o: ..\LVGL\examples\porting\lv_port_indev.h
