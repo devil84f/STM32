@@ -18,44 +18,44 @@
 /* 宏定义 */
 #define RX_BUFFER_SIZE   4096
 
-#define AT_RESULT_OK     0
-#define AT_RESULT_ERROR  1
-#define AT_RESULT_FAIL   2
-
-typedef struct {
-    char city[32];
-    char weather_text[32];  // 如 "Sunny"
-    char temperature[8];    // 如 "27"
-    uint32_t timestamp;     // 时间戳
-} WeatherInfo;
+#define RX_RESULT_OK    0
+#define RX_RESULT_ERROR 1
+#define RX_RESULT_FAIL  2
 
 /* 变量 */
-static uint32_t rxdata[RX_BUFFER_SIZE];
-static uint32_t rxlen;
-static uint8_t rxready;
-static uint8_t rxresult;
+extern uint8_t arxdata;			//接收中断缓冲
+extern uint32_t rxlen;
+extern bool rxready;
+extern uint8_t rxresult;
+extern char rxdata[RX_BUFFER_SIZE];
 
 /* 函数声明 */
-uint8_t esp_at_init(void);
-uint8_t esp_at_send_command(const char *cmd, const char **rsp, uint32_t *length, uint32_t timeout);
-uint8_t esp_at_send_data(const char *data, uint32_t *length);
+bool esp_at_init(void);
+bool esp_at_send_command(const char *cmd, const char **rsp, uint32_t *length, uint32_t timeout);
+bool esp_at_send_data(const uint8_t *data, uint32_t length);
 
-uint8_t esp_at_reset(void);
+bool esp_at_reset(void);
 
-uint8_t esp_at_wifi_init(void);
-uint8_t esp_at_wifi_connect(const char *ssid, const char *pwd);
+bool esp_at_wifi_init(void);
+bool esp_at_wifi_connect(const char *ssid, const char *pwd);
 
-uint8_t esp_at_http_get(const char *url, const char **rsp, uint32_t *length, uint32_t timeout);
-uint8_t esp_at_time_get(uint32_t *timestamp);
+bool esp_at_http_get(const char *url, const char **rsp, uint32_t *length, uint32_t timeout);
+bool esp_at_sntp_init(void);
+bool esp_at_time_get(uint32_t *timestamp);
 
-void format_time_string(uint32_t timestamp, char *time_str, size_t max_len);
+typedef struct
+{
+    char weather[32];
+    char temperature[8];
+} weather_t;
+
+
+bool weather_parse(const char *data, weather_t *weather);
+
 void ui_create(void);
-void ui_update_weather_info(const WeatherInfo *info);
-void parse_weather_response(const char *json, WeatherInfo *info);
-void weather_task(void);
+void ui_update_weather_info(const weather_t *info);
 
 #endif /* __ESP_H__ */
-
 
 
 

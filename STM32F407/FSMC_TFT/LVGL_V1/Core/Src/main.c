@@ -32,6 +32,7 @@
 #include "touch.h"
 
 #include "esp.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,8 +63,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-#define RXBUFFERSIZE  256
-char RxBuffer[RXBUFFERSIZE];
 
 /*
 for循环实现延时us
@@ -78,6 +77,9 @@ void for_delay_us(uint32_t nus)
     while (Delay --);
 }
 
+static const char *wifi_ssid = "RK50U";
+static const char *wifi_password = "12345678";
+static const char *weather_uri = "https://api.seniverse.com/v3/weather/now.json?key=SZuZdJEYI7cY_ghfz&location=xian&language=en&unit=c";
 /* USER CODE END 0 */
 
 /**
@@ -113,6 +115,7 @@ int main(void)
   MX_SPI2_Init();
   MX_I2C1_Init();
   MX_TIM6_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	// LCD 触摸屏初始化
 	lcd_init(); 
@@ -126,12 +129,25 @@ int main(void)
 	
 	// 开启LVGL时钟
 	HAL_TIM_Base_Start_IT(&htim6);
+	ui_create();              // 创建初始界面
+	lv_timer_handler();				// LVGL 内部任务处理
 	
-	esp_at_init();            // 初始化 ESP AT 通信
-  ui_create();              // 创建初始界面
-	
-	// ===== 获取天气和时间信息并显示到 UI =====
-  weather_task();           // 获取数据、更新 g_weather_info、刷新 UI
+	if (!esp_at_init())
+	{
+			while (1);
+	}
+	if (!esp_at_wifi_init())
+	{
+			while (1);
+	}
+	if (!esp_at_wifi_connect(wifi_ssid, wifi_password))
+	{
+			printf("Dead in esp_at_wifi_connect\r\n");
+			while (1);
+	}
+	bool weather_ok = false;
+	uint32_t t = 0;
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -142,16 +158,25 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		
 		lv_task_handler();    // LVGL 内部任务处理
 		HAL_Delay(5);
-
-		// 你可以每隔一段时间刷新一次天气
-		static uint32_t last_tick = 0;
-		if (HAL_GetTick() - last_tick > 60000)  // 每 10 秒更新一次
+		
+		t++;
+    HAL_Delay(1000);
+		
+		if (!weather_ok || t % 10 == 0)
 		{
-				weather_task();
-				last_tick = HAL_GetTick();
+				const char *rsp;
+				weather_ok = esp_at_http_get(weather_uri, &rsp, NULL, 10000);
+				weather_t weather;
+			
+				weather_parse(rsp, &weather);
+			
+				printf("rsp: %s\r\n", rsp);
+			  printf("temperature: %s\r\n", weather.temperature);
+				printf("weather: %s\r\n", weather.weather);
+			
+				ui_update_weather_info(&weather);
 		}
   }
   /* USER CODE END 3 */
@@ -221,37 +246,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			LedTimes = 0;
 		}
 	}
-}
-
-/************************************************************************************
- * @brief       HAL_UART_RxCpltCallback
- * @note        串口中断回调函数
- *							接受esp的数据
- * @param       TIM_HandleTypeDef *huart
- * @retval      无
-*************************************************************************************/
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-    if (huart->Instance == USART2)
-    {
-        if (rxlen < RX_BUFFER_SIZE - 1)
-        {
-            rxlen++;
-        }
-
-        if (strstr((char *)rxdata, "OK") != NULL)
-        {
-            rxready = 1;
-            rxresult = AT_RESULT_OK;
-        }
-        else if (strstr((char *)rxdata, "ERROR") != NULL)
-        {
-            rxready = 1;
-            rxresult = AT_RESULT_ERROR;
-        }
-
-        HAL_UART_Receive_IT(&huart2, (uint8_t *)&rxdata[rxlen], 1);  // 继续接收
-    }
 }
 
 /* USER CODE END 4 */

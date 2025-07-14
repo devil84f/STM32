@@ -11,193 +11,286 @@
 #include <stdlib.h>
 
 /* 变量 */
-static uint32_t rxdata[RX_BUFFER_SIZE];
-static uint32_t rxlen;
-static uint8_t rxready;
-static uint8_t rxresult;
+uint8_t arxdata;			//接收中断缓冲
+uint32_t rxlen = 0;
+bool rxready;
+uint8_t rxresult;
+char rxdata[RX_BUFFER_SIZE];
+/************************************************************************************
+ * @brief       HAL_UART_RxCpltCallback
+ * @note        串口中断回调函数
+ *							接受esp的数据
+ * @param       TIM_HandleTypeDef *huart
+ * @retval      无
+*************************************************************************************/
+// USART2接收中断回调
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(huart);
+  /* NOTE: This function Should not be modified, when the callback is needed,
+           the HAL_UART_TxCpltCallback could be implemented in the user file
+   */
+	if (!rxready)
+	{
+			return;
+	}
+	
+	if(rxlen >= RX_BUFFER_SIZE)  //溢出判断
+	{
+		rxlen = 0;
+		rxresult = RX_RESULT_FAIL;
+		rxready = false;
+		memset(rxdata,0x00,sizeof(rxdata)); 
+	}
+	else
+	{
+		rxdata[rxlen++] = arxdata;   //接收数据转存
+	
+		if((rxdata[rxlen-1] == 0x0A)&&(rxdata[rxlen-2] == 0x0D)&&(rxdata[rxlen-3] == 'K')&&(rxdata[rxlen-4] == 'O')) //判断结束位
+		{
+			printf("Receive: %s\n", rxdata);
+			rxlen = 0;
+			rxresult = RX_RESULT_OK;
+			rxready = false;
+		}
+		else if ((rxdata[rxlen - 1] == 0x0A)&&(rxdata[rxlen-2] == 0x0D)&&(rxdata[rxlen-3] == 'R')&&(rxdata[rxlen-4] == 'O')
+					&&(rxdata[rxlen-5] == 'R')&&(rxdata[rxlen-6] == 'R')&&(rxdata[rxlen-7] == 'E'))
+		{
+				printf("接收ERROR：%s\r\n", rxdata);
+				rxlen = 0;
+				rxresult = RX_RESULT_ERROR;
+				rxready = false;
+				memset(rxdata,0x00,sizeof(rxdata)); //清空数组ERROR
+		}
+	}
+	
+	HAL_UART_Receive_IT(&huart2, (uint8_t *)&arxdata, 1);   //再开启接收中断
+}
 
 /**
  * @brief       esp32初始化函数
  * @param       无
- * @retval      1：初始化成功 0：失败
+ * @retval      无
  */
-uint8_t esp_at_init(void)
+bool esp_at_init(void)
 {
     rxlen = 0;
-    rxready = 0;
-    rxresult = AT_RESULT_ERROR;
+		rxready = false;
 
-    HAL_UART_Receive_IT(&huart2, (uint8_t *)&rxdata[rxlen], 1);  // 开启串口中断接收
-    return AT_RESULT_OK;
+    HAL_UART_Receive_IT(&huart2, (uint8_t *)&arxdata, 1);  // 开启串口中断接收
+		
+		return esp_at_reset(); 
 }
 
 /**
  * @brief       发送AT指令并等待响应
  * @param       const char *cmd AT指令
-								const char **rsp 回应
-								uint32_t *length 回应长度
 								uint32_t timeout 最大等待时间
- * @retval      1：初始化成功 0：失败
+ * @retval      0：发送成功 1：发送失败
  */
-uint8_t esp_at_send_command(const char *cmd, const char **rsp, uint32_t *length, uint32_t timeout)
+bool esp_at_send_command(const char *cmd, const char **rsp, uint32_t *length, uint32_t timeout)
 {
     rxlen = 0;
-    rxready = 0;
+    rxready = true;
+    rxresult = RX_RESULT_FAIL;
 
-    HAL_UART_Transmit(&huart2, (uint8_t *)cmd, strlen(cmd), 1000);
-    HAL_UART_Transmit(&huart2, (uint8_t *)"\r\n", 2, 1000);
-
-    uint32_t tickstart = HAL_GetTick();
-    while (!rxready)
+		HAL_UART_Transmit(&huart2, (uint8_t *)cmd, strlen(cmd), HAL_MAX_DELAY);
+		
+    while (rxready && timeout--)
     {
-        if (HAL_GetTick() - tickstart > timeout)
-        {
-            return AT_RESULT_FAIL;
-        }
+        HAL_Delay(1);
+    }
+    rxready = false;
+
+    if (rsp)
+    {
+        *rsp = (const char *)rxdata;
+    }
+    if (length)
+    {
+        *length = rxlen;
     }
 
-    if (rsp) *rsp = (char *)rxdata;
-    if (length) *length = rxlen;
-
-    return rxresult;
+    return rxresult == RX_RESULT_OK;
 }
 
-uint8_t esp_at_send_data(const char *data, uint32_t *length)
+/**
+ * @brief       ESP32C3 AT初始化
+ * @param       无
+ * @retval      1：初始化成功 0：初始化失败
+ */
+bool esp_at_reset(void)
 {
-    HAL_UART_Transmit(&huart2, (uint8_t *)data, strlen(data), 1000);
-    if (length) *length = strlen(data);
-    return AT_RESULT_OK;
+		HAL_Delay(1000);
+		// 复位esp32
+    if (!esp_at_send_command("AT+GMR\r\n", NULL, NULL, 1000))
+    {
+        return false;
+    }
+    HAL_Delay(1000);
+    // 关闭回显
+    if (!esp_at_send_command("ATE0\r\n", NULL, NULL, 1000))
+    {
+        return false;
+    }
+    // 关闭存储
+    if (!esp_at_send_command("AT+SYSSTORE=0\r\n", NULL, NULL, 1000))
+    {		
+        return false;
+    }
+
+    return true;
 }
 
-uint8_t esp_at_reset(void)
+/**
+ * @brief       ESP32C3 WIFI初始化
+ * @param       无
+ * @retval      0：初始化成功 1：初始化失败
+ */
+bool esp_at_wifi_init(void)
 {
-    const char *rsp;
-    uint32_t len;
-    return esp_at_send_command("AT+RST", &rsp, &len, 2000);
+    // 设置为station模式
+    if (!esp_at_send_command("AT+CWMODE=1\r\n", NULL, NULL, 1000))
+    {
+        return false;
+    }
+
+    return true;
 }
 
-uint8_t esp_at_wifi_init(void)
+bool esp_at_wifi_connect(const char *ssid, const char *pwd)
 {
-    const char *rsp;
-    uint32_t len;
+    char cmd[64];
 
-    if (esp_at_send_command("ATE0", &rsp, &len, 1000) != AT_RESULT_OK) return AT_RESULT_FAIL; // 关闭回显
-    if (esp_at_send_command("AT+CWMODE=1", &rsp, &len, 1000) != AT_RESULT_OK) return AT_RESULT_FAIL; // 设置为STA模式
-    return AT_RESULT_OK;
+    // 连接wifi
+    snprintf(cmd, sizeof(cmd), "AT+CWJAP=\"%s\",\"%s\"\r\n", ssid, pwd);
+    if (!esp_at_send_command(cmd, NULL, NULL, 10000))
+    {
+        return false;
+    }
+
+    return true;
 }
 
-uint8_t esp_at_wifi_connect(const char *ssid, const char *pwd)
+bool esp_at_http_get(const char *url, const char **rsp, uint32_t *length, uint32_t timeout)
 {
     char cmd[128];
-    const char *rsp;
-    uint32_t len;
 
-    snprintf(cmd, sizeof(cmd), "AT+CWJAP=\"%s\",\"%s\"", ssid, pwd);
-    return esp_at_send_command(cmd, &rsp, &len, 10000);
-}
-
-uint8_t esp_at_http_get(const char *url, const char **rsp, uint32_t *length, uint32_t timeout)
-{
-    char cmd[256];
-    snprintf(cmd, sizeof(cmd), "AT+HTTPCGET=\"%s\"", url);
-    return esp_at_send_command(cmd, rsp, length, timeout);
-}
-
-uint8_t esp_at_time_get(uint32_t *timestamp)
-{
-    const char *rsp;
-    uint32_t len;
-    if (esp_at_send_command("AT+SYSTIMESTAMP?", &rsp, &len, 2000) != AT_RESULT_OK)
-        return AT_RESULT_FAIL;
-
-    char *p = strstr(rsp, "+SYSTIMESTAMP:");
-    if (p)
+    snprintf(cmd, sizeof(cmd), "AT+HTTPCGET=\"%s\"\r\n", url);
+    if (!esp_at_send_command(cmd, rsp, length, 10000))
     {
-        *timestamp = atoi(p + strlen("+SYSTIMESTAMP:"));
-        return AT_RESULT_OK;
+				printf("HTTP ERROR");
+        return false;
     }
 
-    return AT_RESULT_FAIL;
+    return true;
 }
 
-void format_time_string(uint32_t timestamp, char *time_str, size_t max_len)
+bool esp_at_sntp_init(void)
 {
-    time_t rawtime = timestamp;
-    struct tm *t = gmtime(&rawtime);  // 如果是本地时间用 localtime()
+    // 设置为SNTP模式
+    if (!esp_at_send_command("AT+CIPSNTPCFG=1,8,\"cn.ntp.org.cn\",\"ntp.sjtu.edu.cn\"\r\n", NULL, NULL, 1000))
+    {
+        return false;
+    }
 
-    snprintf(time_str, max_len, "%04d-%02d-%02d %02d:%02d:%02d",
-             t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
-             t->tm_hour, t->tm_min, t->tm_sec);
+    // 查询sntp时间
+    if (!esp_at_send_command("AT+CIPSNTPTIME?\r\n", NULL, NULL, 1000))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool esp_at_time_get(uint32_t *timestamp)
+{
+    const char *rsp;
+    uint32_t length;
+
+    if (!esp_at_send_command("AT+SYSTIMESTAMP?\r\n", &rsp, &length, 1000))
+    {
+        return false;
+    }
+
+    char *sts = strstr(rsp, "+SYSTIMESTAMP:") + strlen("+SYSTIMESTAMP:");
+
+    *timestamp = atoi(sts);
+
+    return true;
+}
+
+bool weather_parse(const char *data, weather_t *weather)
+{
+    char *p = strstr(data, "\"text\":\"");
+    if (p == NULL)
+    {
+        return false;
+    }
+    p += strlen("\"text\":\"");
+    char *q = strchr(p, '\"');
+    if (q == NULL)
+    {
+        return false;
+    }
+    int len = q - p;
+    if (len >= sizeof(weather->weather))
+    {
+        len = sizeof(weather->weather) - 1;
+    }
+    strncpy(weather->weather, p, len);
+    weather->weather[len] = '\0';
+
+    p = strstr(data, "\"temperature\":\"");
+    if (p == NULL)
+    {
+        return false;
+    }
+    p += strlen("\"temperature\":\"");
+    q = strchr(p, '\"');
+    if (q == NULL)
+    {
+        return false;
+    }
+    len = q - p;
+    if (len >= sizeof(weather->temperature))
+    {
+        len = sizeof(weather->temperature) - 1;
+    }
+    strncpy(weather->temperature, p, len);
+    weather->temperature[len] = '\0';
+
+    return true;
 }
 
 lv_obj_t *label_city;
 lv_obj_t *label_weather;
-lv_obj_t *label_temp;
+lv_obj_t *label_temperature;
 lv_obj_t *label_time;
 
 void ui_create(void)
 {
     label_city = lv_label_create(lv_scr_act());
-    lv_label_set_text(label_city, "City:");
+    lv_label_set_text(label_city, "City:	Xi'an");
     lv_obj_align(label_city, LV_ALIGN_TOP_LEFT, 10, 10);
 
     label_weather = lv_label_create(lv_scr_act());
     lv_label_set_text(label_weather, "Weather:");
     lv_obj_align(label_weather, LV_ALIGN_TOP_LEFT, 10, 40);
 
-    label_temp = lv_label_create(lv_scr_act());
-    lv_label_set_text(label_temp, "Temp:");
-    lv_obj_align(label_temp, LV_ALIGN_TOP_LEFT, 10, 70);
-
+		label_temperature = lv_label_create(lv_scr_act());
+    lv_label_set_text(label_temperature, "Temperature:");
+    lv_obj_align(label_temperature, LV_ALIGN_TOP_LEFT, 10, 70);
+	
     label_time = lv_label_create(lv_scr_act());
     lv_label_set_text(label_time, "Time:");
     lv_obj_align(label_time, LV_ALIGN_TOP_LEFT, 10, 100);
 }
 
-void ui_update_weather_info(const WeatherInfo *info)
+void ui_update_weather_info(const weather_t *info)
 {
-    char buf[64];
-    
-    lv_label_set_text_fmt(label_city, "City: %s", info->city);
-    lv_label_set_text_fmt(label_weather, "Weather: %s", info->weather_text);
-    lv_label_set_text_fmt(label_temp, "Temp: %s°C", info->temperature);
-
-    format_time_string(info->timestamp, buf, sizeof(buf));
-    lv_label_set_text_fmt(label_time, "Time: %s", buf);
+    lv_label_set_text_fmt(label_weather, "Weather: %s", info->weather);
+	  lv_label_set_text_fmt(label_temperature, "Temperature: %s", info->temperature);
+    lv_label_set_text_fmt(label_time, "Time: %s", "11");
 }
-
-void parse_weather_response(const char *json, WeatherInfo *info)
-{
-    // 非正式方法，仅适用于固定格式
-    char *p;
-
-    // 获取城市
-    p = strstr(json, "\"name\":\"");
-    if (p) sscanf(p, "\"name\":\"%[^\"]\"", info->city);
-
-    // 获取天气
-    p = strstr(json, "\"text\":\"");
-    if (p) sscanf(p, "\"text\":\"%[^\"]\"", info->weather_text);
-
-    // 获取温度
-    p = strstr(json, "\"temperature\":\"");
-    if (p) sscanf(p, "\"temperature\":\"%[^\"]\"", info->temperature);
-}
-
-WeatherInfo g_weather_info;
-void weather_task(void)
-{
-    const char *rsp;
-    uint32_t len;
-
-    if (esp_at_http_get("https://api.seniverse.com/v3/weather/now.json?key=SZuZdJEYI7cY_ghfz&location=xian&language=en&unit=c", &rsp, &len, 5000) == AT_RESULT_OK)
-    {
-        parse_weather_response(rsp, &g_weather_info);
-    }
-
-    if (esp_at_time_get(&g_weather_info.timestamp) == AT_RESULT_OK)
-    {
-        ui_update_weather_info(&g_weather_info);
-    }
-}
-
