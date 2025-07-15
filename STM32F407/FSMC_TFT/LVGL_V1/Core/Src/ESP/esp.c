@@ -122,13 +122,12 @@ bool esp_at_send_command(const char *cmd, const char **rsp, uint32_t *length, ui
  */
 bool esp_at_reset(void)
 {
-		HAL_Delay(1000);
 		// ∏¥Œªesp32
-    if (!esp_at_send_command("AT+GMR\r\n", NULL, NULL, 1000))
+    if (!esp_at_send_command("AT\r\n", NULL, NULL, 1000))
     {
         return false;
     }
-    HAL_Delay(1000);
+    HAL_Delay(2000);
     // πÿ±’ªÿœ‘
     if (!esp_at_send_command("ATE0\r\n", NULL, NULL, 1000))
     {
@@ -180,7 +179,6 @@ bool esp_at_http_get(const char *url, const char **rsp, uint32_t *length, uint32
     snprintf(cmd, sizeof(cmd), "AT+HTTPCGET=\"%s\"\r\n", url);
     if (!esp_at_send_command(cmd, rsp, length, 10000))
     {
-				printf("HTTP ERROR");
         return false;
     }
 

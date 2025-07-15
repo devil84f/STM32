@@ -94,9 +94,15 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	HAL_UART_Receive_IT(&huart2, (uint8_t *)&aRxBuffer, 1);
-	HAL_UART_Transmit(&huart2, (uint8_t *)"AT\r\n", 4, 0xFFFF);
-	HAL_Delay(1000);
-	HAL_UART_Transmit(&huart2, (uint8_t *)"ATT+GMR\r\n", 9, 0xFFFF);
+	//HAL_UART_Transmit(&huart2, (uint8_t *)"AT\r\n", 4, 0xFFFF);
+	HAL_Delay(2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)"AT+CWMODE=1\r\n", 13, 0xFFFF);
+	HAL_Delay(2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)"AT+CWJAP=\"RK50U\",\"12345678\"\r\n", 29, 0xFFFF);
+	HAL_Delay(2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)"AT+SYSTIMESTAMP?\r\n", 18, 0xFFFF);
+	HAL_Delay(2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)"AT+SYSTIMESTAMP?\r\n", 18, 0xFFFF);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -176,14 +182,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	
 		if((RxBuffer[Uart1_Rx_Cnt-1] == 0x0A)&&(RxBuffer[Uart1_Rx_Cnt-2] == 0x0D)&&(RxBuffer[Uart1_Rx_Cnt-3] == 'K')&&(RxBuffer[Uart1_Rx_Cnt-4] == 'O')) //判断结束位
 		{
-			printf("Receive: %s\n", RxBuffer);
+			printf("Receive: %s\r\n", RxBuffer);
 			Uart1_Rx_Cnt = 0;
 			memset(RxBuffer,0x00,sizeof(RxBuffer)); //清空数组
 		}
 		else if ((RxBuffer[Uart1_Rx_Cnt - 1] == 0x0A)&&(RxBuffer[Uart1_Rx_Cnt-2] == 0x0D)&&(RxBuffer[Uart1_Rx_Cnt-3] == 'R')&&(RxBuffer[Uart1_Rx_Cnt-4] == 'O')
 					&&(RxBuffer[Uart1_Rx_Cnt-5] == 'R')&&(RxBuffer[Uart1_Rx_Cnt-6] == 'R')&&(RxBuffer[Uart1_Rx_Cnt-7] == 'E'))
 		{
-				printf("接收ERROR\r\n");
+				printf("接收ERROR: %s\r\n", RxBuffer);
 				Uart1_Rx_Cnt = 0;
 				memset(RxBuffer,0x00,sizeof(RxBuffer)); //清空数组
 		}
