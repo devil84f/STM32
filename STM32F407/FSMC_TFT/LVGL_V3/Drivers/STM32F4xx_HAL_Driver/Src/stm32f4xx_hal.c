@@ -35,7 +35,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 #include <stdio.h>
-extern UART_HandleTypeDef huart2;   //声明串口
+extern UART_HandleTypeDef huart3;   //声明串口
 
 /** @addtogroup STM32F4xx_HAL_Driver
   * @{
@@ -147,7 +147,7 @@ HAL_TickFreqTypeDef uwTickFreq = HAL_TICK_FREQ_DEFAULT;  /* 1KHz */
   */
 int fputc(int ch, FILE *f)
 {
-  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xffff);
+  HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xffff);
   return ch;
 }
  
@@ -160,7 +160,7 @@ int fputc(int ch, FILE *f)
 int fgetc(FILE *f)
 {
   uint8_t ch = 0;
-  HAL_UART_Receive(&huart2, &ch, 1, 0xffff);
+  HAL_UART_Receive(&huart3, &ch, 1, 0xffff);
   return ch;
 }
 

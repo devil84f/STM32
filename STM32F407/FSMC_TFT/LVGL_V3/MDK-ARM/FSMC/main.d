@@ -32,6 +32,8 @@ fsmc\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
 fsmc\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
 fsmc\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 fsmc\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+fsmc\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h
+fsmc\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h
 fsmc\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 fsmc\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 fsmc\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
@@ -167,6 +169,7 @@ fsmc\main.o: ..\LVGL\src/extra/widgets/span/lv_span.h
 fsmc\main.o: ..\LVGL\examples\porting\lv_port_disp.h
 fsmc\main.o: ..\LVGL\examples\porting\lv_port_indev.h
 fsmc\main.o: ../Core/Inc/i2c.h
+fsmc\main.o: ../Core/Inc/rtc.h
 fsmc\main.o: ../Core/Inc/spi.h
 fsmc\main.o: ../Core/Inc/tim.h
 fsmc\main.o: ../Core/Inc/usart.h

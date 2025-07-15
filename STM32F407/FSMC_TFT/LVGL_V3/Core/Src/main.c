@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "i2c.h"
+#include "rtc.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
@@ -63,7 +64,60 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void Set_RTC_DateTime(uint8_t hours, uint8_t mins, uint8_t secs,
+                     uint16_t year, uint8_t month, uint8_t day, uint8_t weekday) 
+{
+    RTC_TimeTypeDef sTime = {0};
+    RTC_DateTypeDef sDate = {0};
+    
+    // 禁用备份域写保护
+    HAL_PWR_EnableBkUpAccess();
+    
+    // 设置时间
+    sTime.Hours = hours;
+    sTime.Minutes = mins;
+    sTime.Seconds = secs;
+    sTime.TimeFormat = RTC_HOURFORMAT_24;
+    sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+    sTime.StoreOperation = RTC_STOREOPERATION_RESET;
+    
+    if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN) != HAL_OK) {
+        Error_Handler();
+    }
+    
+    // 设置日期
+    sDate.Year = year - 2000;
+    sDate.Month = month;
+    sDate.Date = day;
+		weekday = weekday == 0 ? 7 : weekday;
+    sDate.WeekDay = weekday;  // 自动计算
+    
+    if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN) != HAL_OK) {
+        Error_Handler();
+    }
+    
+    // 重新启用写保护
+    HAL_PWR_DisableBkUpAccess();
+}
 
+// 获取并打印当前RTC时间和日期
+void Print_RTC_DateTime(void)
+{
+    RTC_TimeTypeDef sTime = {0};
+    RTC_DateTypeDef sDate = {0};
+    char *weekday[] = {"", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    
+    // 获取时间
+    HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+    // 获取日期
+    HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
+    
+		char str[128];
+    // 打印日期和时间
+    sprintf(str, "20%02d-%02d-%02d %s %02d:%02d:%02d\r\n", 
+           sDate.Year, sDate.Month, sDate.Date, weekday[sDate.WeekDay], sTime.Hours, sTime.Minutes, sTime.Seconds);
+		ui_update_time_info(str);
+}
 /*
 for循环实现延时us
 */
@@ -117,6 +171,7 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM6_Init();
   MX_USART3_UART_Init();
+  MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 	// LCD 触摸屏初始化
 	lcd_init(); 
@@ -144,7 +199,6 @@ int main(void)
 	HAL_Delay(500);
 	if (!esp_at_wifi_connect(wifi_ssid, wifi_password))
 	{
-			printf("Dead in esp_at_wifi_connect\r\n");
 			while (1);
 	}
 	bool weather_ok = false;
@@ -155,7 +209,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	char str[64];
+	rtc_date_t date;
   while (1)
   {
     /* USER CODE END WHILE */
@@ -166,9 +220,9 @@ int main(void)
 		
 		t++;
     HAL_Delay(1000);
-		
+
 		/* BUG:如果设置为20和10，则在20s时两个会同时触发，中断来不及处理，就会无限乱码 */
-		if (!weather_ok || t % 20 == 0)
+		if (!weather_ok || t % 60 == 0)
 		{
 				const char *rsp;
 				weather_ok = esp_at_http_get(weather_uri, &rsp, NULL, 10000);
@@ -179,7 +233,7 @@ int main(void)
 				memset(rxdata,0x00,sizeof(rxdata)); //清空数组ERROR
 				ui_update_weather_info(&weather);
 		}
-		if (!sntp_ok || t % 15 == 0)
+		if (!sntp_ok || t % 3600 == 0)
 		{
 				const char *rsp1;
 				sntp_ok = esp_at_http_get(time_uri, &rsp1, NULL, 10000);
@@ -189,12 +243,12 @@ int main(void)
 						number = comma_pos + 1; // 跳过逗号
 				}
 				uint32_t UnixTime = atoi(number);
-				rtc_date_t date;
         ts_to_date(UnixTime + 8 * 60 * 60, &date);
-        snprintf(str, sizeof(str), "%04d-%02d-%02d  %02d:%02d:%02d", date.year, date.month, date.day, date.hour, date.minute, date.second);
-				printf("%s\r\n", str);
-				ui_update_time_info(str);
+				HAL_Delay(500);
+				Set_RTC_DateTime(date.hour, date.minute, date.second + 1, date.year, date.month, date.day, date.weekday);
 		}
+		
+		Print_RTC_DateTime();
   }
   /* USER CODE END 3 */
 }
@@ -215,7 +269,8 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;

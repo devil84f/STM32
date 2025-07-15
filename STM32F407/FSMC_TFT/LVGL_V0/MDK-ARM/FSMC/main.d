@@ -176,3 +176,5 @@ fsmc\main.o: ..\LVGL\src/extra/widgets/imgbtn/lv_imgbtn.h
 fsmc\main.o: ..\LVGL\src/extra/widgets/span/lv_span.h
 fsmc\main.o: ..\LVGL\examples\porting\lv_port_disp.h
 fsmc\main.o: ..\LVGL\examples\porting\lv_port_indev.h
+fsmc\main.o: ..\LVGL\MyGui\generated\gui_guider.h
+fsmc\main.o: ..\LVGL\MyGui\generated\events_init.h

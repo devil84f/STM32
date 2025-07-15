@@ -262,6 +262,15 @@ bool weather_parse(const char *data, weather_t *weather)
     return true;
 }
 
+int get_weekday(uint16_t year, uint8_t month, uint8_t day) {
+    // Tomohiko Sakamoto's algorithm
+    static const int t[] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+    if (month < 3)
+        year--;
+    return (year + year/4 - year/100 + year/400 + t[month-1] + day) % 7;
+    // 返回值：0=周日, 1=周一, ..., 6=周六
+}
+
 void ts_to_date(uint32_t seconds, rtc_date_t *date)
 {
     uint32_t leapyears = 0, yearhours = 0;
@@ -330,6 +339,9 @@ void ts_to_date(uint32_t seconds, rtc_date_t *date)
 
     /* 日 */
     date->day = seconds;
+		
+		/* 周几 */
+		date->weekday = get_weekday(date->year, date->month, date->day);
 }
 
 lv_obj_t *label_city;

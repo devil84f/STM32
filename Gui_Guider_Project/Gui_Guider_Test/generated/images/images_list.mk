@@ -1,0 +1,1 @@
+GEN_CSRCS += _Cloud_alpha_100x100.c

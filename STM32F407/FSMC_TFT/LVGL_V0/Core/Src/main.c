@@ -34,6 +34,11 @@
 #include "lvgl.h"                // 它为整个LVGL提供了更完整的头文件引用
 #include "lv_port_disp.h"        // LVGL的显示支持
 #include "lv_port_indev.h"       // LVGL的触屏支持
+
+#include "gui_guider.h"          // Gui Guider 生成的界面和控件的声明
+#include "events_init.h"         // Gui Guider 生成的初始化事件、回调函数
+lv_ui  guider_ui;                // 声明 界面对象
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -129,37 +134,8 @@ int main(void)
 	// 开启LVGL时钟
 	HAL_TIM_Base_Start_IT(&htim6);
 	
-	// 按钮
-	lv_obj_t *myBtn = lv_btn_create(lv_scr_act());                               // 创建按钮; 父对象：当前活动屏幕
-	lv_obj_set_pos(myBtn, 10, 10);                                               // 设置坐标
-	lv_obj_set_size(myBtn, 120, 50);                                             // 设置大小
-	
-	// 按钮样式
-	static lv_style_t style_btn;
-	lv_style_init(&style_btn);
-	lv_style_set_bg_color(&style_btn, lv_palette_main(LV_PALETTE_BLUE));  // 蓝色背景
-	lv_style_set_bg_opa(&style_btn, LV_OPA_COVER);
-	lv_obj_add_style(myBtn, &style_btn, LV_STATE_DEFAULT);
-
-	// 设置按钮样式（按下状态）
-	lv_style_set_bg_color(&style_btn, lv_palette_darken(LV_PALETTE_BLUE, 2));  // 深蓝色
-	lv_obj_add_style(myBtn, &style_btn, LV_STATE_PRESSED);
- 
-	// 按钮上的文本
-	lv_obj_t *label_btn = lv_label_create(myBtn);                                // 创建文本标签，父对象：上面的btn按钮
-	lv_obj_align(label_btn, LV_ALIGN_CENTER, 0, 0);                              // 对齐于：父对象
-	lv_label_set_text(label_btn, "Click Me!");                                        // 设置标签的文本
-
-	// 独立的标签
-	lv_obj_t *myLabel = lv_label_create(lv_scr_act());                           // 创建文本标签; 父对象：当前活动屏幕
-	lv_label_set_text(myLabel, "Hello LVGL!");                                  // 设置标签的文本
-	lv_obj_align(myLabel, LV_ALIGN_CENTER, 0, 0);                                // 对齐于：父对象
-	lv_obj_align_to(myBtn, myLabel, LV_ALIGN_OUT_TOP_MID, 0, -20);               // 对齐于：某对象
-	
-	// 设置独立标签的颜色
-	static lv_style_t style_label;
-	lv_style_set_text_color(&style_label, lv_color_hex(0x000000));  // 黑色文本
-	lv_obj_add_style(myLabel, &style_label, LV_STATE_DEFAULT);
+	setup_ui(&guider_ui);
+	events_init(&guider_ui);
   /* USER CODE END 2 */
 
   /* Infinite loop */

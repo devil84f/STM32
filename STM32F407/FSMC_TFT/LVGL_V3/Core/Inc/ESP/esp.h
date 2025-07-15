@@ -65,6 +65,7 @@ typedef struct
     uint8_t hour;
     uint8_t minute;
     uint8_t second;
+		uint8_t weekday;
 } rtc_date_t;
 void ts_to_date(uint32_t seconds, rtc_date_t *date);
 #endif /* __ESP_H__ */
