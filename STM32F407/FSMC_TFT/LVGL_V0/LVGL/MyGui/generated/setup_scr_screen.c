@@ -13,8 +13,19 @@
 #include "events_init.h"
 #include "widgets_init.h"
 #include "custom.h"
+#include "main.h"
 
 
+static void btn_event_cb(lv_event_t *e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t *btn = lv_event_get_target(e);
+ 
+    if(code == LV_EVENT_CLICKED)
+    {
+        HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);
+    }
+}
 
 void setup_scr_screen(lv_ui *ui)
 {

@@ -157,6 +157,17 @@ int main(void)
 			lv_timer_handler();
 			msLVGL = 0;
 		}
+		static uint16_t ts = 0;
+		if (ts++ >= 1000)
+		{
+			static uint8_t s = 0;
+			char label_time[32];  // 确保足够存储字符串
+			snprintf(label_time, sizeof(label_time), "20:%02d   July", s);  // 安全版 sprintf
+			lv_label_set_text(guider_ui.screen_label_2, label_time);
+			s++;
+			s = s >= 60 ? 0 : s;
+			ts = 0;
+		}
   }
   /* USER CODE END 3 */
 }
@@ -218,12 +229,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if (htim->Instance == TIM6) // 判断中断来自TIM6
 	{
 		lv_tick_inc(1); // 给LVGL提供1ms心跳的心跳周期
-		static uint16_t LedTimes = 0;  // LED闪烁计时
-		if (LedTimes++ >= 500) //500ms执行一次LED闪烁
-		{
-			HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);
-			LedTimes = 0;
-		}
 	}
 }
 
