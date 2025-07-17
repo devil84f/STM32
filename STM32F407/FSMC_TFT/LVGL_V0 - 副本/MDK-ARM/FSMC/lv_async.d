@@ -1,0 +1,13 @@
+fsmc\lv_async.o: ..\LVGL\src\misc\lv_async.c
+fsmc\lv_async.o: ..\LVGL\src\misc\lv_async.h
+fsmc\lv_async.o: ..\LVGL\src\misc\lv_types.h
+fsmc\lv_async.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdint.h
+fsmc\lv_async.o: ..\LVGL\src\misc\lv_mem.h
+fsmc\lv_async.o: ..\LVGL\src\misc\../lv_conf_internal.h
+fsmc\lv_async.o: ..\LVGL\src\misc\../lv_conf_kconfig.h
+fsmc\lv_async.o: ..\LVGL\examples\porting\../../lv_conf.h
+fsmc\lv_async.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stddef.h
+fsmc\lv_async.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\string.h
+fsmc\lv_async.o: ..\LVGL\src\misc\lv_timer.h
+fsmc\lv_async.o: ..\LVGL\src\misc\../hal/lv_hal_tick.h
+fsmc\lv_async.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdbool.h

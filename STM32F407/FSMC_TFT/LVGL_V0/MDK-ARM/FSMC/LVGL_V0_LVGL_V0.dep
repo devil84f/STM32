@@ -1,6 +1,6 @@
 Dependencies for Project 'LVGL_V0', Target 'LVGL_V0': (DO NOT MODIFY !)
 F (startup_stm32f407xx.s)(0x6870C383)(--cpu Cortex-M4.fp -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_LVGL_V0-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "STM32F407xx SETA 1"--list startup_stm32f407xx.lst --xref -o fsmc\startup_stm32f407xx.o --depend fsmc\startup_stm32f407xx.d)
-F (../Core/Src/main.c)(0x68776530)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\Inc\LCD -I ..\Core\Inc\TOUCH -I ..\Core\Inc\24CXX -I ..\Core\Inc\IIC -I ..\LVGL -I ..\LVGL\src -I ..\LVGL\examples\porting -I ..\LVGL\src\draw -I ..\LVGL\MyGui\custom -I ..\LVGL\MyGui\generated -I ..\LVGL\MyGui\generated\guider_fonts --no-multibyte-chars-I.\RTE\_LVGL_V0-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o fsmc\main.o --omf_browse fsmc\main.crf --depend fsmc\main.d)
+F (../Core/Src/main.c)(0x68776986)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\Inc\LCD -I ..\Core\Inc\TOUCH -I ..\Core\Inc\24CXX -I ..\Core\Inc\IIC -I ..\LVGL -I ..\LVGL\src -I ..\LVGL\examples\porting -I ..\LVGL\src\draw -I ..\LVGL\MyGui\custom -I ..\LVGL\MyGui\generated -I ..\LVGL\MyGui\generated\guider_fonts --no-multibyte-chars-I.\RTE\_LVGL_V0-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o fsmc\main.o --omf_browse fsmc\main.crf --depend fsmc\main.d)
 I (../Core/Inc/main.h)(0x6870C380)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x684C1A23)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x6870C380)
@@ -15140,7 +15140,7 @@ I (..\LVGL\src/extra/widgets/span/lv_span.h)(0x68706EF3)
 I (D:\Keil5\Keil5\APP\ARM\ARMCC\include\stdio.h)(0x588B8344)
 I (..\LVGL\MyGui\generated\gui_guider.h)(0x6877201F)
 F (..\LVGL\MyGui\generated\gui_guider.h)(0x6877201F)()
-F (..\LVGL\MyGui\generated\setup_scr_screen.c)(0x68771FA8)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\Inc\LCD -I ..\Core\Inc\TOUCH -I ..\Core\Inc\24CXX -I ..\Core\Inc\IIC -I ..\LVGL -I ..\LVGL\src -I ..\LVGL\examples\porting -I ..\LVGL\src\draw -I ..\LVGL\MyGui\custom -I ..\LVGL\MyGui\generated -I ..\LVGL\MyGui\generated\guider_fonts --no-multibyte-chars-I.\RTE\_LVGL_V0-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o fsmc\setup_scr_screen.o --omf_browse fsmc\setup_scr_screen.crf --depend fsmc\setup_scr_screen.d)
+F (..\LVGL\MyGui\generated\setup_scr_screen.c)(0x6878F150)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\Inc\LCD -I ..\Core\Inc\TOUCH -I ..\Core\Inc\24CXX -I ..\Core\Inc\IIC -I ..\LVGL -I ..\LVGL\src -I ..\LVGL\examples\porting -I ..\LVGL\src\draw -I ..\LVGL\MyGui\custom -I ..\LVGL\MyGui\generated -I ..\LVGL\MyGui\generated\guider_fonts --no-multibyte-chars-I.\RTE\_LVGL_V0-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o fsmc\setup_scr_screen.o --omf_browse fsmc\setup_scr_screen.crf --depend fsmc\setup_scr_screen.d)
 I (..\LVGL\lvgl.h)(0x68706EEC)
 I (..\LVGL\src/misc/lv_log.h)(0x68706EF4)
 I (..\LVGL\src/misc/../lv_conf_internal.h)(0x68706EF2)
@@ -15275,6 +15275,40 @@ I (..\LVGL\MyGui\generated\gui_guider.h)(0x6877201F)
 I (..\LVGL\MyGui\generated\events_init.h)(0x68765168)
 I (..\LVGL\MyGui\generated\widgets_init.h)(0x68765168)
 I (..\LVGL\MyGui\custom\custom.h)(0x6876472C)
+I (../Core/Inc/main.h)(0x6870C380)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x684C1A23)
+I (../Core/Inc/stm32f4xx_hal_conf.h)(0x6870C380)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x684C1A23)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x684C1A22)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x684C1A22)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x684C19E1)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x684C19E1)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x684C19E1)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x684C19E1)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x684C19E1)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x684C1A22)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x684C1A23)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x684C1A23)
 F (..\LVGL\MyGui\generated\widgets_init.c)(0x68765168)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\Inc\LCD -I ..\Core\Inc\TOUCH -I ..\Core\Inc\24CXX -I ..\Core\Inc\IIC -I ..\LVGL -I ..\LVGL\src -I ..\LVGL\examples\porting -I ..\LVGL\src\draw -I ..\LVGL\MyGui\custom -I ..\LVGL\MyGui\generated -I ..\LVGL\MyGui\generated\guider_fonts --no-multibyte-chars-I.\RTE\_LVGL_V0-ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o fsmc\widgets_init.o --omf_browse fsmc\widgets_init.crf --depend fsmc\widgets_init.d)
 I (..\LVGL\lvgl.h)(0x68706EEC)
 I (..\LVGL\src/misc/lv_log.h)(0x68706EF4)

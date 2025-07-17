@@ -181,3 +181,5 @@ fsmc\main.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\stdlib.h
 fsmc\main.o: ..\Core\Inc\TOUCH\touch.h
 fsmc\main.o: ..\Core\Inc\ESP\esp.h
 fsmc\main.o: D:\Keil5\Keil5\APP\ARM\ARMCC\Bin\..\include\time.h
+fsmc\main.o: ..\LVGL\LVGL_MyGui\generated\gui_guider.h
+fsmc\main.o: ..\LVGL\LVGL_MyGui\generated\events_init.h

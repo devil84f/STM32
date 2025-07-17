@@ -33,7 +33,9 @@
 #include "touch.h"
 
 #include "esp.h"
-
+#include "gui_guider.h"          // Gui Guider 生成的界面和控件的声明
+#include "events_init.h"         // Gui Guider 生成的初始化事件、回调函数
+lv_ui  guider_ui;                // 声明 界面对象
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -113,10 +115,16 @@ void Print_RTC_DateTime(void)
     HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
     
 		char str[128];
-    // 打印日期和时间
-    sprintf(str, "20%02d-%02d-%02d %s %02d:%02d:%02d\r\n", 
-           sDate.Year, sDate.Month, sDate.Date, weekday[sDate.WeekDay], sTime.Hours, sTime.Minutes, sTime.Seconds);
-		ui_update_time_info(str);
+    // 打印日期和时间 "%02d:%02d:%02d   July"
+    sprintf(str, "%02d:%02d:%02d   July", 
+           sTime.Hours, sTime.Minutes, sTime.Seconds);
+		lv_label_set_text(guider_ui.screen_label_2, str);
+		char str1[128];
+    // 打印日期和时间 "2025年7月15日"
+//    sprintf(str1, "20%02d年%02d月%02d日", 
+//           sDate.Year, sDate.Month, sDate.Date);
+//		lv_label_set_text(guider_ui.screen_label_8, str1);
+		// ui_update_time_info(str);
 }
 /*
 for循环实现延时us
@@ -176,17 +184,19 @@ int main(void)
 	// LCD 触摸屏初始化
 	lcd_init(); 
 	g_point_color = RED;
-  //tp_dev.init();
+  tp_dev.init();
 	
 	// LVGL初始化
 	lv_init();                             // LVGL 初始化
 	lv_port_disp_init();                   // 注册LVGL的显示任务
-	//lv_port_indev_init();                  // 注册LVGL的触屏检测任务
+	lv_port_indev_init();                  // 注册LVGL的触屏检测任务
 	
 	// 开启LVGL时钟
 	HAL_TIM_Base_Start_IT(&htim6);
-	ui_create();              // 创建初始界面
-	lv_timer_handler();				// LVGL 内部任务处理
+	
+	setup_ui(&guider_ui);
+	events_init(&guider_ui);
+	
 	if (!esp_at_init())
 	{
 			while (1);
@@ -219,6 +229,11 @@ int main(void)
 		HAL_Delay(5);
 		
 		t++;
+		// 优化：① 减少主程序中断，使用定时器中断更新时间，否则按键检测不灵
+		// 优化：② 封装函数功能，按键触发时调用更新天气和时间，目前是触发更新图片，只需在events_init.c中编写回调函数即可
+		// 优化：③ 串口中断获取天气时间，容易数据丢失或者乱码，改用串口DMA+环形缓冲区接收数据，或者串口DMA+双 环形缓冲区
+		// 优化：④ 能不占用主循环程序的尽量挪到DMA 定时器 等
+		// 优化：⑤ 程序整体移植到FreeRTOS中
     HAL_Delay(1000);
 
 		/* BUG:如果设置为20和10，则在20s时两个会同时触发，中断来不及处理，就会无限乱码 */
@@ -231,7 +246,8 @@ int main(void)
 				weather_parse(rsp, &weather);
 				
 				memset(rxdata,0x00,sizeof(rxdata)); //清空数组ERROR
-				ui_update_weather_info(&weather);
+				// ui_update_weather_info(&weather);
+				
 		}
 		if (!sntp_ok || t % 3600 == 0)
 		{

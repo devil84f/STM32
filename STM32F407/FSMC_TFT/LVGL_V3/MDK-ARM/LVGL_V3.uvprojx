@@ -336,7 +336,7 @@
               <MiscControls>--no-multibyte-chars</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Core\Inc\LCD;..\Core\Inc\TOUCH;..\Core\Inc\24CXX;..\Core\Inc\IIC;..\LVGL;..\LVGL\src;..\LVGL\examples\porting;..\LVGL\src\draw;..\Core\Inc\ESP</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Core\Inc\LCD;..\Core\Inc\TOUCH;..\Core\Inc\24CXX;..\Core\Inc\IIC;..\LVGL;..\LVGL\src;..\LVGL\examples\porting;..\LVGL\src\draw;..\Core\Inc\ESP;..\LVGL\LVGL_MyGui\generated;..\LVGL\LVGL_MyGui\custom;..\LVGL\LVGL_MyGui\generated\guider_fonts</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2209,6 +2209,118 @@
         </Group>
         <Group>
           <GroupName>LVGL_myGUI</GroupName>
+          <Files>
+            <File>
+              <FileName>events_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\events_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>events_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\events_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>gui_guider.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\gui_guider.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_guider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\gui_guider.h</FilePath>
+            </File>
+            <File>
+              <FileName>setup_scr_screen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\setup_scr_screen.c</FilePath>
+            </File>
+            <File>
+              <FileName>widgets_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\widgets_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>widgets_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\widgets_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>_clear_alpha_100x100.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\images\_clear_alpha_100x100.c</FilePath>
+            </File>
+            <File>
+              <FileName>_Cloud_alpha_100x100.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\images\_Cloud_alpha_100x100.c</FilePath>
+            </File>
+            <File>
+              <FileName>_cloudy_alpha_100x100.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\images\_cloudy_alpha_100x100.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_arial_18.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\guider_fonts\lv_font_arial_18.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserratMedium_12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\guider_fonts\lv_font_montserratMedium_12.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserratMedium_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\guider_fonts\lv_font_montserratMedium_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserratMedium_18.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\guider_fonts\lv_font_montserratMedium_18.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_SourceHanSerifSC_Regular_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\guider_fonts\lv_font_SourceHanSerifSC_Regular_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_SourceHanSerifSC_Regular_17.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\guider_fonts\lv_font_SourceHanSerifSC_Regular_17.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_SourceHanSerifSC_Regular_18.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\guider_fonts\lv_font_SourceHanSerifSC_Regular_18.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_SourceHanSerifSC_Regular_30.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\guider_fonts\lv_font_SourceHanSerifSC_Regular_30.c</FilePath>
+            </File>
+            <File>
+              <FileName>guider_customer_fonts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\generated\guider_customer_fonts\guider_customer_fonts.h</FilePath>
+            </File>
+            <File>
+              <FileName>custom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\custom\custom.c</FilePath>
+            </File>
+            <File>
+              <FileName>custom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\custom\custom.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_conf_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LVGL\LVGL_MyGui\custom\lv_conf_ext.h</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>

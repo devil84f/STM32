@@ -1,1 +1,1 @@
-GEN_CSRCS += _Cloud_alpha_100x100.c
+GEN_CSRCS += _Cloud_alpha_100x100.c _cloudy_alpha_100x100.c _clear_alpha_100x100.c

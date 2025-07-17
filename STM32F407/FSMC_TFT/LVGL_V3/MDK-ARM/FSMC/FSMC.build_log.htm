@@ -22,16 +22,22 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 D:\Keil5\Github\STM32\STM32F407\FSMC_TFT\LVGL_V3\MDK-ARM\LVGL_V3.uvprojx
-Project File Date:  07/15/2025
+Project File Date:  07/17/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\Keil5\Keil5\APP\ARM\ARMCC\Bin'
 Build target 'LVGL_V3'
+compiling setup_scr_screen.c...
 compiling main.c...
+../Core/Src/main.c(110): warning:  #177-D: variable "weekday"  was declared but never referenced
+      char *weekday[] = {"", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+../Core/Src/main.c(122): warning:  #177-D: variable "str1"  was declared but never referenced
+  		char str1[128];
+../Core/Src/main.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=166888 RO-data=19008 RW-data=600 ZI-data=65304  
+Program Size: Code=181180 RO-data=199312 RW-data=696 ZI-data=65376  
 FromELF: creating hex file...
-"FSMC\FSMC.axf" - 0 Error(s), 0 Warning(s).
+"FSMC\FSMC.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -54,7 +60,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.0.1
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

@@ -275,4 +275,5 @@ void setup_scr_screen(lv_ui *ui)
 	//Update current screen layout.
 	lv_obj_update_layout(ui->screen);
 
+  lv_obj_add_event_cb(ui->screen_btn_2, btn_event_cb, LV_EVENT_ALL, NULL);
 }
