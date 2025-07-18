@@ -1,0 +1,158 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdlib.h>
+
+// 定义环形缓冲区大小
+#define RING_BUFFER_SIZE 256
+
+// 环形缓冲区结构体
+typedef struct {
+    uint8_t buffer[RING_BUFFER_SIZE];
+    volatile uint32_t head;  // 写入位置
+    volatile uint32_t tail;  // 读取位置
+} RingBuffer;
+
+// DMA控制结构体
+typedef struct {
+    RingBuffer *rx_buffer;   // 接收缓冲区
+    uint8_t *dma_buffer;     // DMA直接访问的缓冲区
+    uint32_t dma_size;       // DMA缓冲区大小
+    uint32_t dma_pos;        // DMA当前写入位置
+    bool dma_active;         // DMA是否激活
+} UART_DMA;
+
+// 初始化环形缓冲区
+void RingBuffer_Init(RingBuffer *rb) {
+    rb->head = 0;
+    rb->tail = 0;
+    memset(rb->buffer, 0, RING_BUFFER_SIZE);
+}
+
+// 检查环形缓冲区是否为空
+bool RingBuffer_IsEmpty(RingBuffer *rb) {
+    return rb->head == rb->tail;
+}
+
+// 检查环形缓冲区是否已满
+bool RingBuffer_IsFull(RingBuffer *rb) {
+    return ((rb->head + 1) % RING_BUFFER_SIZE) == rb->tail;
+}
+
+// 向环形缓冲区写入数据
+bool RingBuffer_Write(RingBuffer *rb, uint8_t data) {
+    if (RingBuffer_IsFull(rb)) {
+        return false; // 缓冲区已满
+    }
+    
+    rb->buffer[rb->head] = data;
+    rb->head = (rb->head + 1) % RING_BUFFER_SIZE;
+    return true;
+}
+
+// 从环形缓冲区读取数据
+bool RingBuffer_Read(RingBuffer *rb, uint8_t *data) {
+    if (RingBuffer_IsEmpty(rb)) {
+        return false; // 缓冲区为空
+    }
+    
+    *data = rb->buffer[rb->tail];
+    rb->tail = (rb->tail + 1) % RING_BUFFER_SIZE;
+    return true;
+}
+
+// 初始化UART DMA
+void UART_DMA_Init(UART_DMA *dma, RingBuffer *rb, uint8_t *dma_buf, uint32_t size) {
+    dma->rx_buffer = rb;
+    dma->dma_buffer = dma_buf;
+    dma->dma_size = size;
+    dma->dma_pos = 0;
+    dma->dma_active = false;
+    
+    RingBuffer_Init(rb);
+    memset(dma_buf, 0, size);
+}
+
+// 模拟DMA接收数据（由硬件中断调用）
+void UART_DMA_Receive(UART_DMA *dma, uint8_t *data, uint32_t len) {
+    if (!dma->dma_active) return;
+    
+    for (uint32_t i = 0; i < len; i++) {
+        // 先存入DMA缓冲区
+        dma->dma_buffer[dma->dma_pos] = data[i];
+        dma->dma_pos = (dma->dma_pos + 1) % dma->dma_size;
+        
+        // 同时存入环形缓冲区
+        RingBuffer_Write(dma->rx_buffer, data[i]);
+    }
+}
+
+// 启动DMA传输
+void UART_DMA_Start(UART_DMA *dma) {
+    dma->dma_active = true;
+    dma->dma_pos = 0;
+}
+
+// 停止DMA传输
+void UART_DMA_Stop(UART_DMA *dma) {
+    dma->dma_active = false;
+}
+
+// 模拟串口接收数据（外部调用）
+void UART_SimulateReceive(UART_DMA *dma, uint8_t *data, uint32_t len) {
+    printf("模拟串口接收到 %d 字节数据: ", len);
+    for (uint32_t i = 0; i < len; i++) {
+        printf("%02X ", data[i]);
+    }
+    printf("\n");
+    
+    UART_DMA_Receive(dma, data, len);
+}
+
+// 从环形缓冲区读取数据（应用程序调用）
+void UART_ReadData(UART_DMA *dma, uint8_t *buf, uint32_t len) {
+    uint32_t count = 0;
+    while (count < len && !RingBuffer_IsEmpty(dma->rx_buffer)) {
+        RingBuffer_Read(dma->rx_buffer, &buf[count]);
+        count++;
+    }
+    
+    printf("从环形缓冲区读取 %d 字节数据: ", count);
+    for (uint32_t i = 0; i < count; i++) {
+        printf("%02X ", buf[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    // 初始化环形缓冲区和DMA
+    RingBuffer rx_ring_buffer;
+    uint8_t dma_buffer[64]; // DMA直接访问的缓冲区
+    UART_DMA uart_dma;
+    
+    UART_DMA_Init(&uart_dma, &rx_ring_buffer, dma_buffer, sizeof(dma_buffer));
+    UART_DMA_Start(&uart_dma);
+    
+    // 模拟串口接收数据
+    uint8_t test_data1[] = {0x11, 0x22, 0x33, 0x44, 0x55};
+    uint8_t test_data2[] = {0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
+    
+    UART_SimulateReceive(&uart_dma, test_data1, sizeof(test_data1));
+    UART_SimulateReceive(&uart_dma, test_data2, sizeof(test_data2));
+    
+    // 从环形缓冲区读取数据
+    uint8_t read_buf[10];
+    UART_ReadData(&uart_dma, read_buf, sizeof(read_buf));
+    
+    // 再次模拟接收更多数据
+    uint8_t test_data3[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+    UART_SimulateReceive(&uart_dma, test_data3, sizeof(test_data3));
+    
+    // 再次读取
+    UART_ReadData(&uart_dma, read_buf, sizeof(read_buf));
+    
+    UART_DMA_Stop(&uart_dma);
+    
+    return 0;
+}
