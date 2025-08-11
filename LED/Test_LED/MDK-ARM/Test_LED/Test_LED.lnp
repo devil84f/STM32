@@ -19,6 +19,6 @@
 "test_led\stm32f1xx_hal_exti.o"
 "test_led\system_stm32f1xx.o"
 --strict --scatter "Test_LED\Test_LED.sct"
---summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "Test_LED.map" -o Test_LED\Test_LED.axf

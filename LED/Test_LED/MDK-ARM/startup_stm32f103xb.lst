@@ -473,11 +473,10 @@ ARM Macro Assembler    Page 8
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=test_led\startup_stm32f103xb.d -otest_led\startup_stm32f103xb.o -I
-D:\STM32\Master\LED\Test_LED\MDK-ARM\RTE -ID:\STM32\keil5\ARM\PACK\ARM\CMSIS\4.
-5.0\CMSIS\Include -ID:\STM32\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Inc
-lude --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 520" --pre
-define="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --list=startup_stm32f10
-3xb.lst startup_stm32f103xb.s
+.\RTE\_Test_LED -ID:\Keil5\Keil5\APP\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include -ID
+:\Keil5\Keil5\APP\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include --predefine=
+"__UVISION_VERSION SETA 524" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_
+MD SETA 1" --list=startup_stm32f103xb.lst startup_stm32f103xb.s
 
 
 
@@ -1203,4 +1202,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 3 symbols
-410 symbols in table
+409 symbols in table
