@@ -1,0 +1,1 @@
+cmd_/home/book/linux/IMX6ULL/drivers/linux_drivers/3_newled/newled.ko := arm-buildroot-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/book/linux/IMX6ULL/drivers/linux_drivers/3_newled/newled.ko /home/book/linux/IMX6ULL/drivers/linux_drivers/3_newled/newled.o /home/book/linux/IMX6ULL/drivers/linux_drivers/3_newled/newled.mod.o
