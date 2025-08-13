@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"init.h": "c",
+			"module.h": "c",
+			"delay.h": "c",
+			"kernel.h": "c",
+			"types.h": "c",
+			"errno.h": "c"
+		}
+	}
+}

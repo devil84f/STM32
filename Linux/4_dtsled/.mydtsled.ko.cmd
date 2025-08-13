@@ -1,0 +1,1 @@
+cmd_/home/book/linux/IMX6ULL/drivers/linux_drivers/4_dtsled/mydtsled.ko := arm-buildroot-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/book/linux/IMX6ULL/drivers/linux_drivers/4_dtsled/mydtsled.ko /home/book/linux/IMX6ULL/drivers/linux_drivers/4_dtsled/mydtsled.o /home/book/linux/IMX6ULL/drivers/linux_drivers/4_dtsled/mydtsled.mod.o
