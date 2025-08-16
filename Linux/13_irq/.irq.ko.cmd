@@ -1,0 +1,1 @@
+cmd_/home/book/linux/IMX6ULL/drivers/linux_drivers/13_irq/irq.ko := arm-buildroot-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/book/linux/IMX6ULL/drivers/linux_drivers/13_irq/irq.ko /home/book/linux/IMX6ULL/drivers/linux_drivers/13_irq/irq.o /home/book/linux/IMX6ULL/drivers/linux_drivers/13_irq/irq.mod.o
