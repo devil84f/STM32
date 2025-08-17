@@ -1,0 +1,2 @@
+/home/book/linux/IMX6ULL/drivers/linux_drivers/14_blockio_event/blockio_event.ko
+/home/book/linux/IMX6ULL/drivers/linux_drivers/14_blockio_event/blockio_event.o

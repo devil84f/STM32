@@ -1,0 +1,11 @@
+{
+   "files.associations": {
+      "uaccess.h": "c",
+      "io.h": "c",
+      "of_address.h": "c",
+      "errno.h": "c",
+      "map.h": "c",
+      "ioctl.h": "c",
+      "semaphore.h": "c"
+   },    "init.h": "c"
+    }
