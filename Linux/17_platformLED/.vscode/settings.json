@@ -1,0 +1,12 @@
+{
+   "files.associations": {
+      "uaccess.h": "c",
+      "io.h": "c",
+      "of_address.h": "c",
+      "errno.h": "c",
+      "map.h": "c",
+      "platform_device.h": "c",
+      "irq.h": "c",
+      "of_gpio.h": "c"
+   },    "init.h": "c"
+    }
