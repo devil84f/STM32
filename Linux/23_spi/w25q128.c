@@ -30,16 +30,17 @@
 #define W25Q128_CNT     1
 
 struct w25q128_dev {
-    void *private_data;
-    int cs_gpio;
+    struct spi_device *spi;
+    u8 id[3];
+    struct mutex lock;
 };
 
 static struct w25q128_dev w25q128;
 
-static int w25q128_read_jedec_id(struct spi_device *spi, u8 *id_buf)
+static int w25q128_read_id(struct w25q128_dev *dev, u8 *id_buf)
 {
     int ret;
-    u8 tx_buf[1] = {W25Q64_JEDEC_ID};
+    u8 tx_buf[4] = {W25Q64_MANUFACTURER_DEVICE_ID, 0xff, 0xff, 0xff};
     u8 rx_buf[3] = {0};
 
     struct spi_transfer t[] = {
@@ -59,17 +60,15 @@ static int w25q128_read_jedec_id(struct spi_device *spi, u8 *id_buf)
     spi_message_add_tail(&t[0], &m);
     spi_message_add_tail(&t[1], &m);
 
-    dev_info(&spi->dev, "Sending JEDEC ID command: 0x%02x\n", W25Q64_JEDEC_ID);
+    mutex_lock(&dev->lock);
+    ret = spi_sync(dev->spi, &m);
+    mutex_unlock(&dev->lock);
     
-    ret = spi_sync(spi, &m);
     if (ret < 0) {
-        dev_err(&spi->dev, "spi_sync failed: %d\n", ret);
+        pr_err("spi_sync failed: %d\n", ret);
         return ret;
     }
 
-    dev_info(&spi->dev, "Received ID: %02x %02x %02x\n", 
-             rx_buf[0], rx_buf[1], rx_buf[2]);
-    
     memcpy(id_buf, rx_buf, sizeof(rx_buf));
     return 0;
 }
@@ -82,118 +81,143 @@ static int w25q128_open(struct inode *inode, struct file *filp)
 
 static ssize_t w25q128_read(struct file *filp, char __user *buf, size_t cnt, loff_t *offt)
 {
-    return 0;
+    struct w25q128_dev *dev = filp->private_data;
+    u8 id_buf[3];
+    int ret;
+    
+    if (cnt < 3) {
+        return -EINVAL;
+    }
+    
+    ret = w25q128_read_id(dev, id_buf);
+    if (ret < 0) {
+        return ret;
+    }
+    
+    if (copy_to_user(buf, id_buf, 3)) {
+        return -EFAULT;
+    }
+    
+    return 3;
 }
 
-static int w25q128_write(struct file *filp, const char __user *buf, size_t cnt, loff_t *offt)
+static ssize_t w25q128_write(struct file *filp, const char __user *buf, size_t cnt, loff_t *offt)
 {
-    return 0;
+    return -EINVAL; // 只读设备，不支持写操作
+}
+
+static long w25q128_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+{
+    struct w25q128_dev *dev = filp->private_data;
+    int ret = 0;
+    
+    switch (cmd) {
+    case W25Q128_GET_ID:
+        if (copy_to_user((void __user *)arg, dev->id, 3)) {
+            ret = -EFAULT;
+        }
+        break;
+    default:
+        ret = -ENOTTY;
+        break;
+    }
+    
+    return ret;
 }
 
 static int w25q128_release(struct inode *inode, struct file *filp)
 {
-	return 0;
+    return 0;
 }
 
 static const struct file_operations w25q128_fops = {
-    .owner  = THIS_MODULE,
-    .open   = w25q128_open,
-    .write  = w25q128_write,
-    .read   = w25q128_read,
-    .release= w25q128_release,
+    .owner      = THIS_MODULE,
+    .open       = w25q128_open,
+    .read       = w25q128_read,
+    .write      = w25q128_write,
+    .unlocked_ioctl = w25q128_ioctl,
+    .release    = w25q128_release,
 };
 
 static struct miscdevice w25q128_misc = {
-    .minor  = MISC_DYNAMIC_MINOR,
-	.name   = W25Q128_NAME,
-	.fops   = &w25q128_fops,
+    .minor      = MISC_DYNAMIC_MINOR,
+    .name       = W25Q128_NAME,
+    .fops       = &w25q128_fops,
 };
 
-static void w25q128_init(struct spi_device *spi)
-{
-    u8 id_buf[3];
-    w25q128_read_jedec_id(spi, id_buf);
-    printk("JEDEC ID: %02x %02x %02x\n", id_buf[0], id_buf[1], id_buf[2]);
-}
-/*
 static int w25q128_probe(struct spi_device *spi)
 {
     int ret;
-    printk("w25q128 driver and device matched!\r\n");
-
-    ret = misc_register(&w25q128_misc);
-
-    spi->mode = SPI_MODE_0;
-    spi_setup(spi);
-    w25q128.private_data = spi; // 设置私有数据为SPI设备
-
-    w25q128_init(w25q128.private_data);
-    return ret;
-} */
-static int w25q128_probe(struct spi_device *spi)
-{
-    int ret;
-    u16 original_mode = spi->mode; // 保存原始模式
+    dev_info(&spi->dev, "w25q128 probe started\n");
+    dev_info(&spi->dev, "SPI device: %s\n", dev_name(&spi->dev));
+    dev_info(&spi->dev, "SPI mode: %u, max speed: %u Hz\n", spi->mode, spi->max_speed_hz);
     
-    printk("w25q128 driver and device matched!\r\n");
-    printk("Current SPI mode: %u, max speed: %u Hz\n", spi->mode, spi->max_speed_hz);
+    printk("w25q128 driver and device matched!\n");
+    printk("SPI mode: %u, max speed: %u Hz\n", spi->mode, spi->max_speed_hz);
 
-    // 尝试强制设置为Mode 0
+    // 设置SPI模式为0
     spi->mode = SPI_MODE_0;
     ret = spi_setup(spi);
     if (ret) {
-        dev_err(&spi->dev, "Failed to setup SPI mode 0\n");
-        // 恢复原始模式
-        spi->mode = original_mode;
+        dev_err(&spi->dev, "Failed to setup SPI\n");
         return ret;
     }
 
+    // 初始化设备结构
+    w25q128.spi = spi;
+    mutex_init(&w25q128.lock);
+
+    // 读取 ID
+    ret = w25q128_read_id(&w25q128, w25q128.id);
+    if (ret) {
+        dev_err(&spi->dev, "Failed to read ID\n");
+        return ret;
+    }
+    
+    printk("ID: %02x %02x %02x\n", 
+           w25q128.id[0], w25q128.id[1], w25q128.id[2]);
+
+    // 注册misc设备
     ret = misc_register(&w25q128_misc);
     if (ret) {
         dev_err(&spi->dev, "Failed to register misc device\n");
         return ret;
     }
 
-    w25q128.private_data = spi;
-    w25q128_init(spi); // 直接传递spi设备
     return 0;
 }
 
 static int w25q128_remove(struct spi_device *spi)
 {
-    printk("w25q128 exit!\r\n");
+    printk("w25q128 driver removed\n");
     misc_deregister(&w25q128_misc);
+    mutex_destroy(&w25q128.lock);
     return 0;
 } 
 
+static const struct spi_device_id w25q128_id[] = {
+	{"alientek,my_w25q128", 0},  
+	{}
+};
+
 static const struct of_device_id w25q128_match_table[] = {
-    { .compatible = "alientek,w25q128" },
-	{ /* Sentinel */ },
+    { .compatible = "alientek,my_w25q128" },
+    { /* Sentinel */ },
 };
 
 static struct spi_driver w25q128_driver = {
-    .driver     = {
-        .owner  = THIS_MODULE,
-        .name   = W25Q128_NAME,
+    .driver = {
+        .name = W25Q128_NAME,
         .of_match_table = w25q128_match_table,
+        .owner = THIS_MODULE,
     },
-    .probe      = w25q128_probe,
-    .remove     = w25q128_remove,
+    .probe = w25q128_probe,
+    .remove = w25q128_remove,
+    .id_table = w25q128_id,
 };
 
-static int __init w25q128_driver_init(void)
-{
-    return spi_register_driver(&w25q128_driver);
-}
-
-static void __exit w25q128_driver_exit(void)
-{
-    spi_unregister_driver(&w25q128_driver);
-}
-
-module_init(w25q128_driver_init);
-module_exit(w25q128_driver_exit);
+module_spi_driver(w25q128_driver);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("LiNing");
-
+MODULE_DESCRIPTION("W25Q128 SPI Flash Driver");

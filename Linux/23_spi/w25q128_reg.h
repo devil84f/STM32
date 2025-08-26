@@ -29,5 +29,7 @@
 #define W25Q64_FAST_READ_QUAD_IO					0xEB
 #define W25Q64_OCTAL_WORD_READ_QUAD_IO				0xE3
 
+#define W25Q128_GET_ID          _IOR('W', 0, char[3])
+
 
 #endif // W25Q128_REG_H

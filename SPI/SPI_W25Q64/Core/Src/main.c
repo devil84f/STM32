@@ -59,7 +59,7 @@ void SystemClock_Config(void);
 uint8_t wData[0x100];
 uint8_t rData[0x100];
 uint32_t i;
-uint8_t ID[2];
+uint8_t ID[3];
 /* USER CODE END 0 */
 
 /**
@@ -100,7 +100,7 @@ int main(void)
   BSP_W25Qx_Init();
   BSP_W25Qx_Read_ID(ID);
 
-  printf(" W25Qxxx ID is : 0x%02X 0x%02X \r\n\r\n",ID[0],ID[1]);
+  printf(" W25Qxxx ID is : 0x%02X 0x%02X 0x%02X \r\n\r\n",ID[0],ID[1],ID[2]);
   /*##-2- Erase Block ##################################*/
   if(BSP_W25Qx_Erase_Block(0) == W25Qx_OK)
       printf(" SPI Erase Block ok\r\n");
