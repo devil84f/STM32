@@ -1,0 +1,1 @@
+cmd_/home/book/linux/IMX6ULL/drivers/linux_drivers/24_multitouch/gd9147.ko := arm-buildroot-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/book/linux/IMX6ULL/drivers/linux_drivers/24_multitouch/gd9147.ko /home/book/linux/IMX6ULL/drivers/linux_drivers/24_multitouch/gd9147.o /home/book/linux/IMX6ULL/drivers/linux_drivers/24_multitouch/gd9147.mod.o
